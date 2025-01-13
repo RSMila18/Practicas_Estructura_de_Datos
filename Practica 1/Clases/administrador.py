@@ -3,7 +3,6 @@ from Clases.fecha import Fecha
 from Listas.doble_list import DoubleList
 from Clases.solicitud import Solicitud
 from Listas.lista_simple import List
-from Funcionalidades.persistencia import guardar_datos
 
 class Administrador(Empleado):
     
@@ -133,14 +132,14 @@ class Administrador(Empleado):
         while current is not None:
             solicitudes_data.append(str(current.get_data()))
             current= current.get_Next()
-        guardar_datos("Solicitudes_agregar.txt", solicitudes_data)
+#        guardar_datos("Solicitudes_agregar.txt", solicitudes_data)
         
         solicitudes_data_eliminar = []
         current = solicitudes_eliminar.first()
         while current is not None:
             solicitudes_data_eliminar.append(str(current.get_data()))
             current= current.get_Next()
-        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
+#        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
 
     #crear_usuario( usuario Usuario): Boolean
     #eliminar_usuario( id Int): Boolean

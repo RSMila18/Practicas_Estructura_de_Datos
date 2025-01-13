@@ -1,7 +1,6 @@
 from datetime import datetime
 from Listas.lista_simple import List
 from Clases.fecha import Fecha
-from Funcionalidades.persistencia import guardar_datos
 
 class ControlCambios:
 
@@ -52,7 +51,7 @@ class ControlCambios:
         while current is not None:
             cambios_data.append(str(current.get_Data()))
             current = current.get_Next()
-        guardar_datos(archivo, cambios_data)
+#        guardar_datos(archivo, cambios_data)
         print(f"Cambios guardados en el archivo: {archivo}")
 
     #registrar_cambio(id Int, placa Int, tipo String):Boolean
