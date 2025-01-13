@@ -24,6 +24,16 @@ class Inventario:
         self.equipos.add_last(equipo)
         print(f"Equipo agregado")
         return True
+    
+    def eliminar_equipo(self, numero_placa):
+        current = self.equipos.first()
+        while current is not None:
+            if current.get_Data().get_numero_placa()==numero_placa:
+                self.equipos.remove(current)
+                print(f"Equipo eliminado")
+                return True
+
+        
     #agregar_equipo(equipo Equipo): Boolean
     #eliminar_equipo(num_placa int): Boolean
     #consultar_inventario(): DoubleList<Equipo>
