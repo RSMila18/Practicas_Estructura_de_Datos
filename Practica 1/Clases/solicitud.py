@@ -49,6 +49,6 @@ class Solicitud:
     def rechazar_solicitud(self):
         self._estado = "rechazada"
         return True
-    
+            
     def str__(self):
         return f'{self._id_solicitud},{self._tipo},{self._estado},{self._numero_placa},{self._justificacion}'  

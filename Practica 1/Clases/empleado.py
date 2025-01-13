@@ -21,7 +21,6 @@ class Empleado(Usuario):
         base_str = super().__str__()
         return f'{base_str},{self._password},{self._descripcion}'
 
-    # Método para ingresar al sistema
     def ingresar_sistema(self, identificacion, password):
         if str(self._id) == str(identificacion) and self._password == password:
             print("Inicio de sesión exitoso.")

@@ -2,6 +2,8 @@ from Clases.empleado import Empleado
 from Clases.fecha import Fecha
 from Listas.doble_list import DoubleList
 from Clases.solicitud import Solicitud
+from Listas.lista_simple import List
+from Clases.persistencia import guardar_datos
 
 class Administrador(Empleado):
     
@@ -89,6 +91,10 @@ class Administrador(Empleado):
         if current is None:
             print("No hay solicitudes pendientes para gestionar.")
             return
+        
+        solicitudes_agregar = List()
+        solicitudes_eliminar = List()
+        
         while current is not None:
             solicitud = current.get_Data() 
             print("\n--- Solicitud ---")
@@ -99,24 +105,42 @@ class Administrador(Empleado):
             print(f"Justificación: {solicitud.get_justificacion()}")
             print(f"Fecha y Hora: {solicitud.get_fecha_hora()}")
 
-            decision = input("¿Aprobar (A) o Rechazar (R)? ").strip().upper()
+            decision = input("¿Aprobar o Rechazar? ").strip().upper()
 
-            if decision == "A":
+            if decision == "Aprobar":
                 print(solicitud.aprobar_solicitud())
 
-            elif decision == "R":
+            elif decision == "Rechazar":
                 print(solicitud.rechazar_solicitud())
             else:
                 print("Decisión inválida. Saltando a la siguiente solicitud.")
                 current = current.get_Next()
                 continue
-
+            
+            if Solicitud.get_estado(self)== "Pendiente":
+                if solicitud.get_tipo()== "Agregar":
+                    solicitudes_agregar.add_Last(str(solicitud))
+                elif solicitud.get_tipo()== "Eliminar":
+                    solicitudes_eliminar.add_Last(str(solicitud))
+                    
+                    
             siguiente = current.get_Next()
-            self.eliminar_de_lista(Solicitud.solicitudes, current)
-            current = siguiente 
-        print("Todas las solicitudes pendientes han sido gestionadas.")
-
-
+            self.eliminar_de_lista(solicitud.solicitudes, current)
+            current = siguiente
+        
+        solicitudes_data = []
+        current = solicitudes_agregar.first()
+        while current is not None:
+            solicitudes_data.append(str(current.get_data()))
+            current= current.get_Next()
+        guardar_datos("Solicitudes_agregar.txt", solicitudes_data)
+        
+        solicitudes_data_eliminar = []
+        current = solicitudes_eliminar.first()
+        while current is not None:
+            solicitudes_data_eliminar.append(str(current.get_data()))
+            current= current.get_Next()
+        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
 
     #crear_usuario( usuario Usuario): Boolean
     #eliminar_usuario( id Int): Boolean
