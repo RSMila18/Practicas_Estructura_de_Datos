@@ -2,8 +2,8 @@ from Listas.doble_list import DoubleList
 from Clases.equipo import Equipo
 
 class Inventario:
-    def __init__(self):
-        self.equipos = DoubleList()
+
+    equipos = DoubleList()
         
     def agregar_equipo(self, equipo):
         
