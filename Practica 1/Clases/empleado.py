@@ -20,3 +20,6 @@ class Empleado(Usuario):
         base_str = super().__str__()
         return f'{base_str},{self._password},{self._descripcion}'
     
+    #ingresar_sistema(id Int, password String): Bolean
+    #consultar_inventario(): List<Equipo>
+    
