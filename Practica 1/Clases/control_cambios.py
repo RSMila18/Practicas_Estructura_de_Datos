@@ -1,11 +1,13 @@
+from datetime import datetime
+
 class ControlCambios:
 
-    def __init__(self, id_empleado = None, numero_placa = None, tipo_cambio = None, fecha = None, hora = None):
+    def __init__(self, id_empleado = None, numero_placa = None, tipo_cambio = None, fecha = None):
         self._id_empleado = id_empleado
         self._numero_placa = numero_placa
         self._tipo_cambio = tipo_cambio
         self._fecha = fecha
-        self._hora = hora
+        self.fecha_hora = datetime.now()
     
     def get_id_empleado(self):
         return self._id_empleado
@@ -23,11 +25,9 @@ class ControlCambios:
         return self._fecha
     def set_fecha (self, fecha):
         self._fecha = fecha
-    def get_hora(self):
-        return self._hora
-    def set_hora(self, hora):
-        self._hora = hora
+    def get_fecha_hora(self):
+        return self.fecha_hora    
     def __str__(self):
-        return f'{self._id_empleado},{self._numero_placa},{self._tipo_cambio},{self._fecha},{self._hora}'
+        return f'{self._id_empleado},{self._numero_placa},{self._tipo_cambio},{self._fecha},{self.fecha_hora}'
 
     #registrar_cambio(id Int, placa Int, tipo String):Boolean

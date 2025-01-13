@@ -1,4 +1,4 @@
-from empleado import Empleado
+from Clases.empleado import Empleado
 
 class Investigador(Empleado):
     pass

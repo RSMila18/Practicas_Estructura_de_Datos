@@ -1,4 +1,4 @@
-from Laboratorio_4.doble_node import DoubleNode
+from Listas.doble_node import DoubleNode
 
 class DoubleList:
     def __init__(self, head = None, tail = None, size = 0):

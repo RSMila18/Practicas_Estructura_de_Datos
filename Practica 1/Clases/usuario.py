@@ -1,7 +1,7 @@
 class Usuario:
-    def __init__(self, nombre = None, identificaion = None, fecha_nacimiento = None, ciudad_nacimiento = None, telefono = None, email = None, direccion = None):
+    def __init__(self, nombre = None, identificacion = None, fecha_nacimiento = None, ciudad_nacimiento = None, telefono = None, email = None, direccion = None):
         self._nombre = nombre
-        self._id = identificaion
+        self._id = identificacion
         self._fecha_nacimiento = fecha_nacimiento
         self._ciudad_nacimiento = ciudad_nacimiento
         self._tel = telefono
