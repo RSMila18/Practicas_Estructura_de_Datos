@@ -1,5 +1,5 @@
 from Listas.lista_simple import List
-from Clases.persistencia import cargar_datos, guardar_datos
+from Funcionalidades.persistencia import cargar_datos, guardar_datos
 class Solicitud:
 
     solicitudes = List()

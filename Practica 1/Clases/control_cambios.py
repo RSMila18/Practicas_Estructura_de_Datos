@@ -1,7 +1,7 @@
 from datetime import datetime
 from Listas.lista_simple import List
 from Clases.fecha import Fecha
-from Clases.persistencia import guardar_datos
+from Funcionalidades.persistencia import guardar_datos
 
 class ControlCambios:
 

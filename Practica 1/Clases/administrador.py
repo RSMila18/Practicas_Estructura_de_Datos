@@ -3,7 +3,7 @@ from Clases.fecha import Fecha
 from Listas.doble_list import DoubleList
 from Clases.solicitud import Solicitud
 from Listas.lista_simple import List
-from Clases.persistencia import guardar_datos
+from Funcionalidades.persistencia import guardar_datos
 
 class Administrador(Empleado):
     
