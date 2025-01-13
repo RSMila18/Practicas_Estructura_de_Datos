@@ -1,11 +1,15 @@
+from Listas.lista_simple import List
 class Solicitud:
-    
+
+    solicitudes = List()
+
     def __init__(self, id_solicitud = None, tipo = None, estado = None, numero_placa = None, justificacion = None):
         self._id_solicitud = id_solicitud
         self._tipo = tipo
         self._estado = estado
         self._numero_placa = numero_placa
         self._justificacion = justificacion
+        Solicitud.solicitudes.append(self)
     
     def get_id_solicitud(self):
         return self._id_solicitud
@@ -25,6 +29,8 @@ class Solicitud:
         return self._justificacion
     def set_justificacion(self, razon):
         self._justificacion = razon
+    def get_solicitudes(self):
+        return Solicitud.solicitudes
     def str__(self):
         return f'{self._id_solicitud},{self._tipo},{self._estado},{self._numero_placa},{self._justificacion}'
 
