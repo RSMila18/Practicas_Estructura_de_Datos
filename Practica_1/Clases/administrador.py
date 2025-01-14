@@ -134,6 +134,7 @@ class Administrador(Empleado):
         while current is not None:
             solicitudes_data.append(str(current.get_data()))
             current= current.get_Next()
+        Solicitud.toFile(solicitudes_data, "Solicitudes_agregar.txt")
 #        guardar_datos("Solicitudes_agregar.txt", solicitudes_data)
         
         solicitudes_data_eliminar = []
@@ -141,6 +142,7 @@ class Administrador(Empleado):
         while current is not None:
             solicitudes_data_eliminar.append(str(current.get_data()))
             current= current.get_Next()
+        Solicitud.toFile(solicitudes_data, "Solicitudes_eliminar.txt")
 #        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
 
     #crear_usuario( usuario Usuario): Boolean
