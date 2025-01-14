@@ -44,11 +44,9 @@ class Solicitud:
     
     def aprobar_solicitud(self):
         self._estado = "aprobada"
-        return True
     
     def rechazar_solicitud(self):
         self._estado = "rechazada"
-        return True
     
     def toFile(self, filename='Solicitudes.txt'):
         full_path = "Practica_1/Datos/" + filename 
