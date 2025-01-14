@@ -21,11 +21,8 @@ class Investigador(Empleado):
         
         equipo_agregar = Equipo(nombre, numero_placa, fecha_compra, valor_compra)
         
-        solicitudes.add_Last((equipo_agregar))
+        Solicitud.solicitudes.add_Last((equipo_agregar))
         
-        if not isinstance(equipo, Equipo):
-            print("El quipo solicitado no se encuentra")
-            return False
     
 
 
