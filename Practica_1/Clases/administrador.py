@@ -128,21 +128,10 @@ class Administrador(Empleado):
             siguiente = current.get_Next()
             self.eliminar_de_lista(solicitud.solicitudes, current)
             current = siguiente
-        
-        solicitudes_data = []
-        current = solicitudes_agregar.first()
-        while current is not None:
-            solicitudes_data.append(str(current.get_data()))
-            current= current.get_Next()
-#        guardar_datos("Solicitudes_agregar.txt", solicitudes_data)
-        
-        solicitudes_data_eliminar = []
-        current = solicitudes_eliminar.first()
-        while current is not None:
-            solicitudes_data_eliminar.append(str(current.get_data()))
-            current= current.get_Next()
-#        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
 
+        Solicitud.toFile(solicitud, "Solicitudes_agregar.txt")
+        Solicitud.toFile(solicitud, "Solicitudes_eliminar.txt")
+        
     #crear_usuario( usuario Usuario): Boolean
     #eliminar_usuario( id Int): Boolean
     #cambiar_contraseña( id Int, csñ String): Boolean
