@@ -1,6 +1,6 @@
 from Clases.empleado import Empleado
 from Clases.equipo import Equipo
-
+from Clases.solicitud import Solicitud
 
 class Investigador(Empleado):
 
@@ -10,10 +10,17 @@ class Investigador(Empleado):
     def solicitar_agregar_equipo(self):
         print("Ingrese los datos del equipo que desee agregar")
         nombre = input("Nombre del equipo: ")
-        numero_placa = input("Numero de placa del equipo: ")
+        while True:
+            numero_placa = input("Número de placa del equipo: ")
+            if numero_placa.isdigit() and len(numero_placa) == 8: 
+                break
+            else:
+                print("Número de placa inválido, debe ser de 8 dígitos.") 
         fecha_compra = input("Fecha de compra del quipo: ")
         valor_compra = input("valor de compra de quipo (DD/MM/AAAA): ")
         equipo = Equipo(nombre, numero_placa, fecha_compra, valor_compra)
+        
+        soli = Solicitud()
         
         if not isinstance(equipo, Equipo):
             print("El quipo solicitado no se encuentra")
