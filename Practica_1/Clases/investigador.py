@@ -16,11 +16,12 @@ class Investigador(Empleado):
                 break
             else:
                 print("Número de placa inválido, debe ser de 8 dígitos.") 
-        fecha_compra = input("Fecha de compra del quipo: ")
-        valor_compra = input("valor de compra de quipo (DD/MM/AAAA): ")
-        equipo = Equipo(nombre, numero_placa, fecha_compra, valor_compra)
+        fecha_compra = input("Fecha de compra del quipo (DD/MM/AAAA): ")
+        valor_compra = input("valor de compra de quipo: ")
         
-        soli = Solicitud()
+        equipo_agregar = Equipo(nombre, numero_placa, fecha_compra, valor_compra)
+        
+        solicitudes.add_Last((equipo_agregar))
         
         if not isinstance(equipo, Equipo):
             print("El quipo solicitado no se encuentra")
