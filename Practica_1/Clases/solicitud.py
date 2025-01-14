@@ -51,7 +51,6 @@ class Solicitud:
     def toFile(self, requests, filename='Solicitudes.txt'):
         full_path = "Practica_1/Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
-            requests = []
 
             for solicitud in requests:
                 archivo.write(str(solicitud) + "\n")
