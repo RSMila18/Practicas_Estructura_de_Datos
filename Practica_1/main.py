@@ -1,4 +1,8 @@
-from Clases.empleado import Empleado
+from sistema import Sistema
 
 if __name__ == "__main__":
-    Empleado()
+    inicio = Sistema.ingresar_sistema()
+
+    Sistema.menu(inicio)
+
+

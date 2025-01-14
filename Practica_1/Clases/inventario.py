@@ -7,6 +7,8 @@ class Inventario:
 
     equipos = DoubleList()
 
+    def get_inventario(self):
+        return Inventario.equipos
     def agregar_equipo(self, equipo, id_empleado):
         
         nombre= input("Nombre del Equipo: ")
@@ -23,7 +25,7 @@ class Inventario:
         else:
             equipo = Equipo(nombre, numero_placa, fecha_compra, valor_compra, empleado)
             DN = DoubleNode(equipo)
-            empleado.consultar_inventario().add_last(DN)
+            empleado.get_inventario().add_last(DN)
             current = self.equipos.first()
             while current is not None:
                 if current.get_Data().get_numero_placa() == numero_placa:
@@ -53,8 +55,10 @@ class Inventario:
         return -1
 
     def consultar_inventario(self):
-        return Inventario.equipos
-        
+        current = Inventario.equipos.first()
+        for _ in range(Inventario.equipos.size(),1):
+            print(current.get_Data())
+            current = current.get_Next()        
     #agregar_equipo(equipo Equipo): Boolean
     #eliminar_equipo(num_placa int): Boolean
     #consultar_inventario(): DoubleList<Equipo>
