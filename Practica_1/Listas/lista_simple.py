@@ -1,4 +1,4 @@
-from Laboratorio_4.node import Node
+from Listas.node import Node
 class List:
     def __init__(self, head = None, tail = None, size = 0):
         self._head = head

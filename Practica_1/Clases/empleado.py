@@ -47,7 +47,7 @@ class Empleado(Usuario):
         full_path = "Practica_1/Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
             employees = []
-            current = Empleado.empleados._head
+            current = Empleado.empleados.first()
             for _ in range(Empleado.empleados.size(),1):
                 employees.append(current)
                 current = current.get_Next().get_Data()

@@ -30,4 +30,3 @@ class Equipo:
         self._empleado = empleado
     def __str__(self):
         return f'{self._empleado.get_nombre()} {self._empelado.get_id()} {self._nombre} {self._numero_placa} {self._fecha_compra.get_dia()} {self._fecha_compra.get_mes()} {self._fecha_compra.get_A()} {self._valor_compra}'
-

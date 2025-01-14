@@ -6,7 +6,7 @@ from Clases.equipo import Equipo
 class Inventario:
 
     equipos = DoubleList()
-    
+
     def agregar_equipo(self, equipo, id_empleado):
         
         nombre= input("Nombre del Equipo: ")
@@ -42,7 +42,18 @@ class Inventario:
                 self.equipos.remove(current)
                 print(f"Equipo eliminado")
                 return True
+    
+    def buscar(self, placa):
+        current = Inventario.equipos.first()
+        for _ in range(Inventario.equipos.size(),1):
+            if placa == current.get_Data().get_numero_placa():
+                return current
+            else:
+                current = current.get_Next()       
+        return -1
 
+    def consultar_inventario(self):
+        return Inventario.equipos
         
     #agregar_equipo(equipo Equipo): Boolean
     #eliminar_equipo(num_placa int): Boolean

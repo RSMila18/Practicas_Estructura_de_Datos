@@ -1,9 +1,10 @@
+from Clases.inventario import Inventario
 from Listas.lista_simple import List
 class Solicitud:
 
     solicitudes = List()
 
-    def __init__(self, id_solicitud, tipo, estado, numero_placa, justificacion):
+    def __init__(self, id_solicitud = None, tipo = None, estado = "pendiente", numero_placa = None, justificacion = None):
         self._id_solicitud = id_solicitud
         self._tipo = tipo
         self._estado = estado
@@ -48,6 +49,21 @@ class Solicitud:
     def rechazar_solicitud(self):
         self._estado = "rechazada"
         return True
+    
+    def toFile(self, filename='Solicitudes.txt'):
+        full_path = "Practica_1/Datos/" + filename 
+        with open(full_path, "w", encoding="utf-8") as archivo:
+            requests = []
+            current = Solicitud.solicitudes.frist()
+            for _ in range(Solicitud.solicitudes.size(),1):
+                requests.append(current)
+                current = current.get_Next().get_Data()
+
+            for solicitud in requests:
+                archivo.write(str(solicitud) + "\n")
+            archivo.close()
             
     def str__(self):
-        return f'{self._id_solicitud},{self._tipo},{self._estado},{self._numero_placa},{self._justificacion}'  
+        #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000
+        equipo = Inventario.buscar(self._numero_placa)
+        return f'{equipo.get_empleado().get_nombre()} {equipo.get_empleado().get_id()} {equipo.get_nombre()} {self._numero_placa} {equipo.get_fecha_compra().get_dia()} {equipo.get_fecha_compra().get_mes()} {equipo.get_fecha_compra().get_A()} {equipo.get_valor_compra()}'  
