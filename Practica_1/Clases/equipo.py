@@ -29,5 +29,5 @@ class Equipo:
     def set_empleado(self, empleado):
         self._empleado = empleado
     def __str__(self):
-        return f'{self._nombre},{self._numero_placa},{self._fecha_compra},{self._valor_compra}, {self._empleado}'
+        return f'{self._empleado.get_nombre()},{self._empelado.get_id()},{self._nombre},{self._numero_placa},{self._fecha_compra},{self._valor_compra}'
 
