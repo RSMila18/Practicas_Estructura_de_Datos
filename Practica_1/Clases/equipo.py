@@ -1,6 +1,7 @@
+from Listas.doble_list import DoubleList
 
 class Equipo:
-
+    equipos = DoubleList()
     def __init__(self, nombre = None, numero_placa = None, fecha_compra = None, valor_compra = None, empleado = None):
         self._nombre = nombre
         self._numero_placa = numero_placa
@@ -8,6 +9,8 @@ class Equipo:
         self._valor_compra = valor_compra
         self._empleado = empleado
 
+    def get_equipos(self):
+        return Equipo.equipos
     def get_nombre(self):
         return self._nombre
     def set_nombre(self, nomnbre):
@@ -30,3 +33,9 @@ class Equipo:
         self._empleado = empleado
     def __str__(self):
         return f'{self._empleado.get_nombre()} {self._empelado.get_id()} {self._nombre} {self._numero_placa} {self._fecha_compra.get_dia()} {self._fecha_compra.get_mes()} {self._fecha_compra.get_A()} {self._valor_compra}'
+
+    def consultar_inventario(self):
+        current = Equipo.equipos.first()
+        for _ in range(Equipo.equipos.size(),1):
+            print(current.get_Data())
+            current = current.get_Next()

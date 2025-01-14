@@ -1,4 +1,6 @@
-from Funcionalidades.sistema import Sistema
+from sistema import Sistema
 
 if __name__ == "__main__":
-    sistema = Sistema()
+    inicio = Sistema.ingresar_sistema()
+
+
