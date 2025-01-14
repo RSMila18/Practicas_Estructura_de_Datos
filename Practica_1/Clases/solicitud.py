@@ -49,7 +49,7 @@ class Solicitud:
         self._estado = "rechazada"
     
     def toFile(self, requests, filename='Solicitudes.txt'):
-        full_path = "Practica_1/Datos/" + filename 
+        full_path = "Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
 
             for solicitud in requests:

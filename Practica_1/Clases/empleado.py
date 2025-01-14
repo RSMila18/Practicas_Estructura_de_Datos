@@ -1,4 +1,4 @@
-from Clases.inventario import Inventario
+from Clases.equipo import Equipo
 from Clases.usuario import Usuario
 from Listas.doble_list import DoubleList
 from Listas.doble_node import DoubleNode
@@ -45,8 +45,8 @@ class Empleado(Usuario):
             Empleado.empleados.add_last(e)
             return True
     
-    def toFile(self, filename='Empleados.txt'):
-        full_path = "Practica_1/Datos/" + filename 
+    def toFile(filename='Empleados.txt'):
+        full_path = "Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
             employees = []
             current = Empleado.empleados.first()
@@ -59,8 +59,8 @@ class Empleado(Usuario):
             archivo.close()
 
     
-    def import_empleados(self, filename="Empleados.txt"):
-        ruta = "Practica_1/Datos/" + filename
+    def import_empleados(filename="Empleados.txt"):
+        ruta = "Datos/" + filename
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()  # Eliminar saltos de línea o espacios extra
@@ -69,16 +69,16 @@ class Empleado(Usuario):
                 new_fecha = Fecha(new_linea[2], new_linea[3], new_linea[4])
                 new_direccion = Direccion(new_linea[8], new_linea[9], new_linea[10], new_linea[11], new_linea[12], new_linea[13])
                 new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[5], int(new_linea[6]), new_linea[7], new_direccion)
-                self.agregar(new_employees)
+                Empleado.agregar(new_employees)
             archivo.close()
     
-    def import_password(self, filename="Password.txt"):
-        ruta = "Practica_1/Datos/" + filename
+    def import_password(filename="Password.txt"):
+        ruta = "Datos/" + filename
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()  # Eliminar saltos de línea o espacios extra
                 new_linea = linea.split(" ")
-                employee = self.buscar(new_linea[0])
+                employee = Empleado.buscar(new_linea[0])
                 if employee != -1:
                     employee.get_Data().set_passwword(new_linea[1])
                     employee.get_Data().set_descripcion(new_linea[2])
@@ -86,14 +86,14 @@ class Empleado(Usuario):
                     print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro")
             archivo.close()
     
-    def consultar_inventario(self, e):
+    def consultar_inventario(e):
         if e.get_descripcion() == "administrador":
             print("\n--- Consultar Inventario ---")
             print("1. Inventario General")
             print("2. Invertario Especifico")
             opcion = input("Seleccione una opción: ")
             if opcion == "1":
-                Inventario.consultar_inventario()
+                Equipo.consultar_inventario()
             elif opcion == "2":
                 ident = input("Ingrese la identificación(cédula) del empleado al que le desea ver el inventario: ")
                 user = Empleado.buscar(ident)

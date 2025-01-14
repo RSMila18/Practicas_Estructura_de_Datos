@@ -2,7 +2,7 @@ from Clases.administrador import Administrador
 from Clases.investigador import Investigador
 class Sistema:    
 
-    def ingresar_sistema(self):
+    def ingresar_sistema():
         Administrador.import_empleados()
         Investigador.import_password()
 
@@ -12,7 +12,7 @@ class Sistema:
 
         empleado = Administrador.buscar(ID)
         if empleado != -1 and empleado.get_password() == password:
-                return empleado
+                Sistema.menu(empleado)
         else:
             print("Identificación y/o contraseña incorrecta.")
             return -1
