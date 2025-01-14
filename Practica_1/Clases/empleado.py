@@ -28,7 +28,7 @@ class Empleado(Usuario):
         return f'{base_str},{self._password},{self._descripcion}'
     
     def buscar(self, identificacion):
-        current = Empleado.empleados._head
+        current = Empleado.empleados.first()
         for _ in range(Empleado.empleados.size(),1):
             if identificacion == current.get_Data().get_id():
                 return current
