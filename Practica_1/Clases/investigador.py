@@ -29,6 +29,8 @@ class Investigador(Empleado):
             
             else:
                 solicitud = Solicitud(empleado, "Agregar", equipo)
+                print(f"Su solicitud quedo tramitada correctamente con los siguientes datos:\n{solicitud}")
+                break
 
 
 
