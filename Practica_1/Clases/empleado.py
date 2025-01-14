@@ -84,6 +84,9 @@ class Empleado(Usuario):
                 if employee != -1:
                     employee.get_Data().set_passwword(new_linea[1])
                     employee.get_Data().set_descripcion(new_linea[2])
+                else:
+                    print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro")
+            archivo.close()
                     
 
 
