@@ -11,35 +11,11 @@ class Investigador(Empleado):
     
     equipo = Equipo(nombre, numero_placa, fecha_compra, valor_compra)
     
-    if not isinstance(equipo, Equipo):
-        print("El quipo solicitado no se encuentra")
-        return False
+    def solicitar_agregar_equipo(self, equipo):
+        if not isinstance(equipo, Equipo):
+            print("El quipo solicitado no se encuentra")
+            return False
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
