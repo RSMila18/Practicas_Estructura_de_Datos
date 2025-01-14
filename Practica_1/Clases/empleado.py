@@ -25,8 +25,7 @@ class Empleado(Usuario):
         self._descripcion = tipo
 
     def __str__(self):
-        base_str = super().__str__()
-        return f'{base_str},{self._password},{self._descripcion}'
+        return f'{self._nombre} {self._id} {self._fecha_nacimiento.get_dia()} {self._fecha_nacimiento.get_mes()} {self._fecha_nacimiento.get_A()} {self._ciudad_nacimiento} {self._tel} {self._email} {self._dir.get_calle()} {self._dir.get_nomenclatura()} {self._dir.get_barrio()} {self._dir.get_ciudad()} {self._dir.get_edificio()} {self._dir.get_apto()} {self._password} {self._descripcion}'
     
     def buscar(self, identificacion):
         current = Empleado.empleados.first()
@@ -63,11 +62,11 @@ class Empleado(Usuario):
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()  # Eliminar saltos de línea o espacios extra
-                new_linea = linea.split(",")
-                fecha = new_linea[2].split("-")
-                new_fecha = Fecha(fecha[0], fecha[1], fecha[2])
-                new_direccion = Direccion(new_linea[6], new_linea[7], new_linea[8], new_linea[9], new_linea[10], new_linea[11])
-                new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[3], int(new_linea[4]), new_linea[5], new_direccion)
+                new_linea = linea.split(" ")
+                #Juan-Perez 24567898 12 10 1980 Medellin 3003233234 juanperez@edl.edu.co kr74 4T-35 Boston Medellin null null
+                new_fecha = Fecha(new_linea[2], new_linea[3], new_linea[4])
+                new_direccion = Direccion(new_linea[8], new_linea[9], new_linea[10], new_linea[11], new_linea[12], new_linea[13])
+                new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[5], int(new_linea[6]), new_linea[7], new_direccion)
                 self.agregar(new_employees)
             archivo.close()
     
@@ -76,7 +75,7 @@ class Empleado(Usuario):
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()  # Eliminar saltos de línea o espacios extra
-                new_linea = linea.split(",")
+                new_linea = linea.split(" ")
                 employee = self.buscar(new_linea[0])
                 if employee != -1:
                     employee.get_Data().set_passwword(new_linea[1])

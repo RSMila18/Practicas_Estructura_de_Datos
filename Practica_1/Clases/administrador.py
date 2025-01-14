@@ -5,6 +5,9 @@ from Clases.solicitud import Solicitud
 from Listas.lista_simple import List
 
 class Administrador(Empleado):
+
+    def __str__(self):
+        super().__str__()
     
     def crear_usuario(self, nombre, identificacion, fecha_nacimiento, ciudad_nacimiento, telefono, email, direccion, password, descripcion):
         super().__init__(nombre, identificacion, fecha_nacimiento, ciudad_nacimiento, telefono, email, direccion, password, descripcion)

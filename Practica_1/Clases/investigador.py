@@ -3,6 +3,9 @@ from Clases.equipo import Equipo
 
 
 class Investigador(Empleado):
+
+    def __str__(self):
+        super().__str__()
     
     def solicitar_agregar_equipo(self):
         print("Ingrese los datos del equipo que desee agregar")
