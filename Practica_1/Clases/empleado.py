@@ -61,7 +61,7 @@ class Empleado(Usuario):
             archivo.close()
 
     
-    def import_Data(self, filename="Empleados.txt"):
+    def import_Empleados(self, filename="Empleados.txt"):
         ruta = "Practica_1/Datos/" + filename
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
@@ -70,9 +70,21 @@ class Empleado(Usuario):
                 fecha = new_linea[2].split("-")
                 new_fecha = Fecha(fecha[0], fecha[1], fecha[2])
                 new_direccion = Direccion(new_linea[6], new_linea[7], new_linea[8], new_linea[9], new_linea[10], new_linea[11])
-                new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[3], int(new_linea[4]), new_linea[5], new_direccion, new_linea[12], new_linea[13])
+                new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[3], int(new_linea[4]), new_linea[5], new_direccion)
                 self.agregar(new_employees)
             archivo.close()
+    
+    def import_password(self, filename="Password.txt"):
+        ruta = "Practica_1/Datos/" + filename
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                linea = linea.strip()  # Eliminar saltos de línea o espacios extra
+                new_linea = linea.split(",")
+                employee = self.buscar(new_linea[0])
+                if employee != -1:
+                    employee.get_Data().set_passwword(new_linea[1])
+                    employee.get_Data().set_descripcion(new_linea[2])
+                    
 
 
     def ingresar_sistema(self, identificacion, password):
