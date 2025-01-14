@@ -5,12 +5,12 @@ class Solicitud:
 
     solicitudes = List()
 
-    def __init__(self, empleado = None, tipo = None, numero_placa = None):
+    def __init__(self, empleado = None, tipo = None, equipo = None):
         self._empleado = empleado #Empleado
         self._tipo = tipo
         self._estado = "Pendiente"
-        self._numero_placa = numero_placa
-        self._justificacion = None
+        self._equipo = equipo
+        self._justificacion = " "
         Solicitud.solicitudes.add_Last(self)
     
     def get_empleado(self):
@@ -28,11 +28,11 @@ class Solicitud:
     def get_estado(self):
         return self._estado
     
-    def get_numero_placa(self):
-        return self._numero_placa
+    def get_equipo(self):
+        return self._equipo
     
-    def set_numero_placa(self, num):
-        self._numero_placa = num
+    def set_equipo(self, num):
+        self._equipo = num
         
     def get_justificacion(self):
         return self._justificacion
@@ -71,7 +71,7 @@ class Solicitud:
                 linea = linea.strip()  # Eliminar saltos de línea o espacios extra
                 new_linea = linea.split(" ")
                 #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000 (7)
-                #(self, empleado = None, tipo = None, numero_placa = None):
+                #(self, empleado = None, tipo = None._equipo = None):
                 employee = Empleado.buscar(new_linea[1])
                 new_requests = Solicitud(employee, type_, new_linea[3])
                 Solicitud.agregar(new_requests)
@@ -79,5 +79,4 @@ class Solicitud:
             
     def __str__(self):
         #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000
-        equipo = Inventario.buscar(self._numero_placa)
-        return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {equipo.get_nombre()} {self._numero_placa} {equipo.get_fecha_compra().get_dia()} {equipo.get_fecha_compra().get_mes()} {equipo.get_fecha_compra().get_A()} {equipo.get_valor_compra()}'  
+        return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {self._equipo.get_nombre()} {self._equipo.get_numero_placa()} {self._equipo.get_fecha_compra().get_dia()} {self._equipo.get_fecha_compra().get_mes()} {self._equipo.get_fecha_compra().get_A()} {self._equipo.get_valor_compra()}'  

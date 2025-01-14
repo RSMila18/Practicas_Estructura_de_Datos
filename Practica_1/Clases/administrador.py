@@ -95,9 +95,11 @@ class Administrador(Empleado):
             print(f"ID: {solicitud.get_empleado().get_id()}")
             print(f"Tipo: {solicitud.get_tipo()}")
             print(f"Estado: {solicitud.get_estado()}")
-            print(f"Placa del Equipo: {solicitud.get_numero_placa()}")
+            print(f"Nombre del Equipo: {solicitud.get_equipo().get_nombre()}")
+            print(f"Placa del Equipo: {solicitud.get_equipo().get_numero_placa()}")
+            print(f"Fecha de Compra: {solicitud.get_equipo().get_fecha_compra()}")
+            print(f"Valor de Compra: {solicitud.get_equipo().get_valor_compra()}")
             print(f"Justificación: {solicitud.get_justificacion()}")
-            print(f"Fecha y Hora: {solicitud.get_fecha_hora()}")
 
             decision = input("¿Aprobar o Rechazar? ").strip().upper()
 
