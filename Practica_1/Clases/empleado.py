@@ -61,7 +61,7 @@ class Empleado(Usuario):
             archivo.close()
 
     
-    def import_Empleados(self, filename="Empleados.txt"):
+    def import_empleados(self, filename="Empleados.txt"):
         ruta = "Practica_1/Datos/" + filename
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
