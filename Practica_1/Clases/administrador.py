@@ -8,7 +8,6 @@ class Administrador(Empleado):
     
     def crear_usuario(self, nombre, identificacion, fecha_nacimiento, ciudad_nacimiento, telefono, email, direccion, password, descripcion):
         super().__init__(nombre, identificacion, fecha_nacimiento, ciudad_nacimiento, telefono, email, direccion, password, descripcion)
-        self.coleccion_empleados = DoubleList()
         
         nombre = input("Nombre: ")
         identificacion = int(input("Número de Identificación: "))
@@ -30,7 +29,7 @@ class Administrador(Empleado):
         descripcion = input("Ingrese el rol del empleado: ")
         
         empleado = Empleado(nombre, identificacion, fecha_nacimiento, ciudad_nacimiento, telefono, correo, direccion, password, descripcion)
-        self.coleccion_empleados.add_last(empleado)
+        super().empleados.add_last(empleado)
         
 #Esto está gregando y asociando la id con la contraseña y rol, para lo del inicio de sesión y el reconocimiento del rol
 #De igual modo esto es para lo de Password.txt
@@ -40,12 +39,12 @@ class Administrador(Empleado):
     def eliminar_usuario(self, identificacion_):
         identificacion_ = input("Ingrese la identificación del usuario a eliminar: ")
 
-        current = self.coleccion_empleados.first() 
+        current = super().empleados.first() 
         found = False
         while current is not None:
             empleado = current.get_Data()
             if empleado.identificacion == identificacion_: 
-                self.coleccion_empleados.remove(current)  
+                super().empleados.remove(current)  
                 found = True
                 break
             current = current.get_Next()
@@ -57,7 +56,7 @@ class Administrador(Empleado):
             
     def cambiar_contraseña(self):
         identificacion = input("Ingrese la identificación del empleado: ")
-        current = self.coleccion_empleados.first()
+        current = super().empleados.first()
         while current is not None:
             empleado = current.get_Data()
             if empleado.identificacion == identificacion:

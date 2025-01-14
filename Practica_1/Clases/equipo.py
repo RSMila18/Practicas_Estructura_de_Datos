@@ -1,3 +1,4 @@
+
 class Equipo:
 
     def __init__(self, nombre = None, numero_placa = None, fecha_compra = None, valor_compra = None):
