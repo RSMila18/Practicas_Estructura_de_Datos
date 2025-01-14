@@ -63,7 +63,7 @@ class Solicitud:
                 archivo.write(str(solicitud) + "\n")
             archivo.close()
             
-    def str__(self):
+    def __str__(self):
         #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000
         equipo = Inventario.buscar(self._numero_placa)
         return f'{equipo.get_empleado().get_nombre()} {equipo.get_empleado().get_id()} {equipo.get_nombre()} {self._numero_placa} {equipo.get_fecha_compra().get_dia()} {equipo.get_fecha_compra().get_mes()} {equipo.get_fecha_compra().get_A()} {equipo.get_valor_compra()}'  
