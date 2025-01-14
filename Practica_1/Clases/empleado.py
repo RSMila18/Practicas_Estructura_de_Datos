@@ -1,5 +1,6 @@
 from Clases.usuario import Usuario
 from Listas.doble_list import DoubleList
+from Listas.doble_node import DoubleNode
 from Clases.fecha import Fecha
 from Clases.direccion import Direccion
 
@@ -26,23 +27,34 @@ class Empleado(Usuario):
         base_str = super().__str__()
         return f'{base_str},{self._password},{self._descripcion}'
     
-    def agregar(self, empleados):
-        if self.buscar(empleados.get_id()) != -1:
+    def buscar(self, identificacion):
+        current = Empleado.empleados._head
+        for _ in range(Empleado.empleados.size(),1):
+            if identificacion == current.get_Data().get_id():
+                return current
+            else:
+                current = current.get_Next()       
+        return -1
+
+    def agregar(self, e):
+        if self.buscar(e.get_id()) != -1:
                 return False
-        
         else:
-            Empleado.empleados
-            self.no_reg += 1
+            N = Empleado.empleados.last()
+            new = DoubleNode(e)
+            N.set_Next() = new
+            new.set_Prev() = N
+            
             return True
     
     def toFile(self, filename='Empleados.txt'):
         full_path = "Practica_1/Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
             employees = []
-            current = empleado._head
-            for _ in range(empleado.size(),1):
+            current = Empleado.empleados._head
+            for _ in range(Empleado.empleados.size(),1):
                 employees.append(current)
-                current = current.get_Prev().get_Data()
+                current = current.get_Next().get_Data()
 
             for empleado in employees:
                 archivo.write(str(empleado) + "\n")
@@ -58,7 +70,7 @@ class Empleado(Usuario):
                 fecha = new_linea[2].split("-")
                 new_fecha = Fecha(fecha[0], fecha[1], fecha[2])
                 new_direccion = Direccion(new_linea[6], new_linea[7], new_linea[8], new_linea[9], new_linea[10], new_linea[11])
-                new_employees = Usuario(new_linea[0], int(new_linea[1]), new_fecha, new_linea[3], int(new_linea[4]), new_linea[5], new_direccion)
+                new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[3], int(new_linea[4]), new_linea[5], new_direccion, new_linea[12], new_linea[13])
                 self.agregar(new_employees)
             archivo.close()
 
