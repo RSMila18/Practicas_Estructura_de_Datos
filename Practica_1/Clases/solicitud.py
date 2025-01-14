@@ -48,14 +48,10 @@ class Solicitud:
     def rechazar_solicitud(self):
         self._estado = "rechazada"
     
-    def toFile(self, Listas, filename='Solicitudes.txt'):
+    def toFile(self, requests, filename='Solicitudes.txt'):
         full_path = "Practica_1/Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
             requests = []
-            current = Listas.frist()
-            for _ in range(Listas.size(),1):
-                requests.append(current)
-                current = current.get_Next().get_Data()
 
             for solicitud in requests:
                 archivo.write(str(solicitud) + "\n")
