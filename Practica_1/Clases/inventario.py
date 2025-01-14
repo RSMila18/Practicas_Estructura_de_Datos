@@ -3,10 +3,10 @@ from Listas.doble_node import DoubleNode
 from Clases.empleado import Empleado
 from Clases.equipo import Equipo
 
-class Inventario(Equipo):
+class Inventario:
 
-    def get_inventario(self):
-        return super().equipos
+    equipos = DoubleList()
+
     def agregar_equipo(self, equipo, id_empleado):
         
         nombre= input("Nombre del Equipo: ")
@@ -21,9 +21,9 @@ class Inventario(Equipo):
             return False
         
         else:
-            equipo = super().__init__(nombre, numero_placa, fecha_compra, valor_compra, empleado)
+            equipo = Equipo(nombre, numero_placa, fecha_compra, valor_compra, empleado)
             DN = DoubleNode(equipo)
-            empleado.get_inventario().add_last(DN)
+            empleado.consultar_inventario().add_last(DN)
             current = self.equipos.first()
             while current is not None:
                 if current.get_Data().get_numero_placa() == numero_placa:
@@ -52,7 +52,9 @@ class Inventario(Equipo):
                 current = current.get_Next()       
         return -1
 
-            
+    def consultar_inventario(self):
+        return Inventario.equipos
+        
     #agregar_equipo(equipo Equipo): Boolean
     #eliminar_equipo(num_placa int): Boolean
     #consultar_inventario(): DoubleList<Equipo>

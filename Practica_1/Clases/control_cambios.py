@@ -6,13 +6,12 @@ class ControlCambios:
 
     registro_cambios = List()
 
-    def __init__(self, id_empleado = None, numero_placa = None, tipo_cambio = None):
+    def __init__(self, id_empleado = None, numero_placa = None, tipo_cambio = None, fecha = None):
         self._id_empleado = id_empleado
         self._numero_placa = numero_placa
         self._tipo_cambio = tipo_cambio
-        fecha_actual = Fecha(datetime.now().day, datetime.now().month, datetime.now().year) 
-        self._fecha = fecha_actual
-        self._hora = datetime.now()
+        self._fecha = fecha
+        self.fecha_hora = datetime.now()
     
     def get_id_empleado(self):
         return self._id_empleado
@@ -28,23 +27,22 @@ class ControlCambios:
         self._tipo_cambio = tipo
     def get_fecha(self):
         return self._fecha
-    def get_hora(self):
-        return self._hora    
+    def set_fecha (self, fecha):
+        self._fecha = fecha
+    def get_fecha_hora(self):
+        return self.fecha_hora    
     def __str__(self):
-    
-        return f'{self._id_empleado} {self._numero_placa} {self._tipo_cambio} {self._fecha.get_dia()} {self._fecha.get_mes()} {self._fecha.get_A()} {self._hora}'
+        return f'{self._id_empleado},{self._numero_placa},{self._tipo_cambio},{self._fecha},{self.fecha_hora}'
 
-    def toFile(self, changes, filename='Control_de_cambios.txt'):
-        full_path = "Practica_1/Datos/" + filename 
-        with open(full_path, "w", encoding="utf-8") as archivo:
-
-            for cambios in changes:
-                archivo.write(str(cambios) + "\n")
-            archivo.close()
-
-    def registrar_cambio(self, id_empleado, numero_placa, tipo_cambio):
+    def registrar_cambio(self, id_empleado, numero_placa, tipo_cambio, fecha, archivo="Control_de_Cambios.txt"):
         
-        cambio = ControlCambios(id_empleado, numero_placa, tipo_cambio)
+        fecha_actual = Fecha(datetime.now().day, datetime.now().month, datetime.now().year)
+        cambio = ControlCambios(
+            id_empleado=id_empleado,
+            numero_placa=numero_placa,
+            tipo_cambio=tipo_cambio,
+            fecha= fecha_actual)
+        
         ControlCambios.registro_cambios.add_Last(cambio)
         print(f"El Cambio ha sido registrado: {cambio}")
         
@@ -53,7 +51,7 @@ class ControlCambios:
         while current is not None:
             cambios_data.append(str(current.get_Data()))
             current = current.get_Next()
-        ControlCambios.toFile(cambios_data)
-        print(f"Los cambios han sido guardados con exito")
+#        guardar_datos(archivo, cambios_data)
+        print(f"Cambios guardados en el archivo: {archivo}")
 
     #registrar_cambio(id Int, placa Int, tipo String):Boolean
