@@ -32,23 +32,19 @@ class Investigador(Empleado):
                 print(f"Su solicitud quedo tramitada correctamente con los siguientes datos:\n{solicitud}")
                 break
 
-
-
-        
-        
-        
-        
-        
-    
-
-
-
-
-
-
-
-
-
+    def solicitar_eliminar_equipo(self, empleado):
+            while True:
+                numero_placa = input("Número de placa del equipo que desea eliminar: ")
+                
+                equipo = Inventario.buscar(numero_placa)
+                if numero_placa.isdigit() and len(numero_placa) == 8 and equipo != -1: 
+                    razon = input("Describa resumidamente el por qué desea eliminar este equipo de su inventario: ")
+                    Solicitud.set_justificacion(razon)
+                    Solicitud_Eliminar = Solicitud(empleado, "Eliminar", equipo)
+                    print(f"Su solicitud quedó tramitada correctamente con los siguientes datos:\n{Solicitud_Eliminar}")
+                    break
+                else:
+                    print("Placa inválida, revise nuevamente.") 
 
     #solicitar_agregar_equipo(equipo Equipo): Boolean
     #solicitar_eliminar_equipo(p int, razon String):Boolean
