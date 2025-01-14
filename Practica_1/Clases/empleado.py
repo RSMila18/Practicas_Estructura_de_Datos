@@ -1,3 +1,4 @@
+from Clases.sistema import Sistema
 from Clases.usuario import Usuario
 from Listas.doble_list import DoubleList
 from Listas.doble_node import DoubleNode
@@ -84,11 +85,12 @@ class Empleado(Usuario):
                     print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro")
             archivo.close()
                     
-
-
     def ingresar_sistema(self, identificacion, password):
         if str(self._id) == str(identificacion) and self._password == password:
             print("Inicio de sesión exitoso.")
+            Empleado.import_empleados()
+            Empleado.import_password()
+            sistema = Sistema()
             return True
         else:
             print("Identificación y/o contraseña incorrecta.")
@@ -96,6 +98,9 @@ class Empleado(Usuario):
     
     def consultar_inventario(self):
         self._inventario
+
+    if __name__ == "__main__":
+        ingresar_sistema()
 
     #ingresar_sistema(id Int, password String): Bolean
     #consultar_inventario(): List<Equipo>

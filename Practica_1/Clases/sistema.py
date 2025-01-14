@@ -1,4 +1,4 @@
-
+from Clases.empleado import Empleado
 class Sistema:    
 
     def menu_administrador(self, id_):

@@ -1,4 +1,4 @@
-from Funcionalidades.sistema import Sistema
+from Clases.empleado import Empleado
 
 if __name__ == "__main__":
-    sistema = Sistema()
+    Empleado()
