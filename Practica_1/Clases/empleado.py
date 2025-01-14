@@ -12,6 +12,7 @@ class Empleado(Usuario):
         super().__init__(nombre, identificacion, fecha_nacimiento, ciudad_nacimiento, telefono, email, direccion)
         self._password = password
         self._descripcion = descripcion
+        self._inventario = DoubleList()
         
 
     def get_password(self):
@@ -40,11 +41,7 @@ class Empleado(Usuario):
         if self.buscar(e.get_id()) != -1:
                 return False
         else:
-            N = Empleado.empleados.last()
-            new = DoubleNode(e)
-            N.set_Next() = new
-            new.set_Prev() = N
-            
+            Empleado.empleados.add_last(e)
             return True
     
     def toFile(self, filename='Empleados.txt'):
@@ -97,6 +94,9 @@ class Empleado(Usuario):
         else:
             print("Identificación y/o contraseña incorrecta.")
             return False
+    
+    def consultar_inventario(self):
+        self._inventario
 
     #ingresar_sistema(id Int, password String): Bolean
     #consultar_inventario(): List<Equipo>
