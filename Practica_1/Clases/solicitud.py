@@ -1,15 +1,16 @@
 from Clases.inventario import Inventario
+from Clases.empleado import Empleado
 from Listas.lista_simple import List
 class Solicitud:
 
     solicitudes = List()
 
-    def __init__(self, empleado = None, tipo = None, estado = "pendiente", numero_placa = None, justificacion = None):
+    def __init__(self, empleado = None, tipo = None, numero_placa = None):
         self._empleado = empleado #Empleado
         self._tipo = tipo
-        self._estado = estado
+        self._estado = "Pendiente"
         self._numero_placa = numero_placa
-        self._justificacion = justificacion
+        self._justificacion = None
         Solicitud.solicitudes.add_Last(self)
     
     def get_empleado(self):
@@ -48,12 +49,32 @@ class Solicitud:
     def rechazar_solicitud(self):
         self._estado = "rechazada"
     
-    def toFile(self, requests, filename='Solicitudes.txt'):
+    def agregar(ident, s):
+        if Empleado.buscar(ident) != -1:
+                print("Empleado no existe")
+        else:
+            Solicitud.solicitudes.add_last(s)
+            print("Solicitud agregada con exito")
+    
+    def toFile(requests, filename='Solicitudes.txt'):
         full_path = "Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
 
             for solicitud in requests:
                 archivo.write(str(solicitud) + "\n")
+            archivo.close()
+
+    def import_solicitud(type_,filename="Empleados.txt"):
+        ruta = "Datos/" + filename
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                linea = linea.strip()  # Eliminar saltos de línea o espacios extra
+                new_linea = linea.split(" ")
+                #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000 (7)
+                #(self, empleado = None, tipo = None, numero_placa = None):
+                employee = Empleado.buscar(new_linea[1])
+                new_requests = Solicitud(employee, type_, new_linea[3])
+                Solicitud.agregar(new_requests)
             archivo.close()
             
     def __str__(self):
