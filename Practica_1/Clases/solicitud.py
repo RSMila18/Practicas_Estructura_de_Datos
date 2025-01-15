@@ -1,4 +1,3 @@
-from Clases.inventario import Inventario
 from Clases.empleado import Empleado
 from Listas.lista_simple import List
 class Solicitud:

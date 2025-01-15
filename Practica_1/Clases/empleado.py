@@ -1,7 +1,6 @@
 from Clases.equipo import Equipo
 from Clases.usuario import Usuario
 from Listas.doble_list import DoubleList
-from Listas.doble_node import DoubleNode
 from Clases.fecha import Fecha
 from Clases.direccion import Direccion
 
