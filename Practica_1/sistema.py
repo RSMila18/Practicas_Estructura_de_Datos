@@ -42,6 +42,8 @@ class Sistema:
                     Administrador.responder_solicitudes()
                 elif opcion == "5":
                     Administrador.consultar_inventario(empleado)
+                elif opcion == "6":
+                    print("Sesión cerrada")
                     break
                 else:
                     print("Opción no válida.")
@@ -69,10 +71,7 @@ class Sistema:
                 elif opcion == "5":
                     self.generar_reporte_investigador(empleado)
                 elif opcion == "6":
-                    self.guardar_archivos()
+                    print("Sesión cerrada")
                     break
                 else:
                     print("Opción no válida.")
-            
-            else:
-                print("Ingreso invalido")
