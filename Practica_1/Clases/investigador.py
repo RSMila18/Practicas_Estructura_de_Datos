@@ -29,6 +29,7 @@ class Investigador(Empleado):
             
             else:
                 solicitud = Solicitud(empleado, "Agregar", equipo)
+                empleado.get_solicitudes().add_last(solicitud)
                 print(f"Su solicitud quedo tramitada correctamente con los siguientes datos:\n{solicitud}")
                 break
 
@@ -40,8 +41,10 @@ class Investigador(Empleado):
                 if numero_placa.isdigit() and len(numero_placa) == 8 and equipo != -1: 
                     razon = input("Describa resumidamente el por qué desea eliminar este equipo de su inventario: ")
                     Solicitud.set_justificacion(razon)
-                    Solicitud_Eliminar = Solicitud(empleado, "Eliminar", equipo)
-                    print(f"Su solicitud quedó tramitada correctamente con los siguientes datos:\n{Solicitud_Eliminar}")
+                    solicitud_eliminar = Solicitud(empleado, "Eliminar", equipo)
+                    empleado.get_solicitudes().add_last(solicitud_eliminar)
+                    print(f"Su solicitud quedó tramitada correctamente con los siguientes datos:\n{solicitud_eliminar}")
+
                     break
                 else:
                     print("Placa inválida, revise nuevamente.") 
