@@ -7,6 +7,9 @@ from Listas.lista_simple import List
 
 class Administrador(Empleado):
 
+    def __init__(self, nombre = None, identificacion = None, fecha_nacimiento = None, ciudad_nacimiento = None, telefono = None, email = None, direccion = None, password = None, descripcion = "administrador"):
+        super().__init__(nombre,identificacion,fecha_nacimiento,ciudad_nacimiento,telefono,email,direccion,password,descripcion)
+    
     def __str__(self):
         super().__str__()
     
@@ -63,8 +66,7 @@ class Administrador(Empleado):
                 return
             current = current.get_Next()  
         print("Empleado no encontrado.")
-        
-        
+               
     def eliminar_de_lista(self, lista, nodo_a_eliminar):
         current = lista.first()
         previous = None
@@ -83,7 +85,6 @@ class Administrador(Empleado):
         current = Solicitud.solicitudes.first()
         if current is None:
             print("No hay solicitudes pendientes para gestionar.")
-            return
         
         solicitudes_agregar = List()
         solicitudes_eliminar = List()
@@ -171,8 +172,3 @@ class Administrador(Empleado):
             current= current.get_Next()
         Solicitud.toFile(solicitudes_data, "Solicitudes_eliminar.txt")
 #        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
-
-    #crear_usuario( usuario Usuario): Boolean
-    #eliminar_usuario( id Int): Boolean
-    #cambiar_contraseña( id Int, csñ String): Boolean
-    #responder_solicitud(id_s Int, action String): Boolean

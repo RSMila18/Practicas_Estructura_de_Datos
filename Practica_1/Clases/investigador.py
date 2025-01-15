@@ -5,6 +5,9 @@ from Clases.solicitud import Solicitud
 
 class Investigador(Empleado):
 
+    def __init__(self, nombre = None, identificacion = None, fecha_nacimiento = None, ciudad_nacimiento = None, telefono = None, email = None, direccion = None, password = None, descripcion = "investigador"):
+        super().__init__(nombre,identificacion,fecha_nacimiento,ciudad_nacimiento,telefono,email,direccion,password,descripcion)
+    
     def __str__(self):
         super().__str__()
     
@@ -29,6 +32,7 @@ class Investigador(Empleado):
             
             else:
                 solicitud = Solicitud(empleado, "Agregar", equipo)
+                empleado.get_solicitudes().add_last(solicitud)
                 print(f"Su solicitud quedo tramitada correctamente con los siguientes datos:\n{solicitud}")
                 break
 
@@ -40,8 +44,10 @@ class Investigador(Empleado):
                 if numero_placa.isdigit() and len(numero_placa) == 8 and equipo != -1: 
                     razon = input("Describa resumidamente el por qué desea eliminar este equipo de su inventario: ")
                     Solicitud.set_justificacion(razon)
-                    Solicitud_Eliminar = Solicitud(empleado, "Eliminar", equipo)
-                    print(f"Su solicitud quedó tramitada correctamente con los siguientes datos:\n{Solicitud_Eliminar}")
+                    solicitud_eliminar = Solicitud(empleado, "Eliminar", equipo)
+                    empleado.get_solicitudes().add_last(solicitud_eliminar)
+                    print(f"Su solicitud quedó tramitada correctamente con los siguientes datos:\n{solicitud_eliminar}")
+
                     break
                 else:
                     print("Placa inválida, revise nuevamente.") 
@@ -59,6 +65,4 @@ class Investigador(Empleado):
                 print(f"No tienes ninguna solicitud registrada")
         
 
-    #solicitar_agregar_equipo(equipo Equipo): Boolean
-    #solicitar_eliminar_equipo(p int, razon String):Boolean
     #consultar_estado_solicitudes(): List<Solicitud>

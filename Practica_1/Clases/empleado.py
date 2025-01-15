@@ -14,9 +14,12 @@ class Empleado(Usuario):
         self._password = password
         self._descripcion = descripcion
         self._inventario = DoubleList()
+        self._solicitudes = DoubleList()
         
     def get_inventario(self):
         return self._inventario
+    def get_solicitudes(self):
+        return self._solicitudes
     def get_password(self):
         return self._password
     def set_password(self, csñ):
@@ -115,9 +118,3 @@ class Empleado(Usuario):
             for _ in range(L.size(),1):
                 print(current.get_Data())
                 current = current.get_Next() 
-
-
-
-
-    #consultar_inventario(): List<Equipo>
-    

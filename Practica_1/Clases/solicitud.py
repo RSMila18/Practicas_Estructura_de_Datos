@@ -15,37 +15,26 @@ class Solicitud:
     
     def get_empleado(self):
         return self._empleado
-    
     def set_empleado(self, ide):
         self._empleado = ide
-        
     def get_tipo(self):
         return self._tipo
-    
     def set_tipo(self, tipo):
         self._tipo = tipo
-        
     def get_estado(self):
         return self._estado
-    
     def get_equipo(self):
         return self._equipo
-    
     def set_equipo(self, num):
         self._equipo = num
-        
     def get_justificacion(self):
         return self._justificacion
-    
     def set_justificacion(self, razon):
         self._justificacion = razon
-        
     def get_solicitudes(self):
         return Solicitud.solicitudes
-    
     def aprobar_solicitud(self):
         self._estado = "aprobada"
-    
     def rechazar_solicitud(self):
         self._estado = "rechazada"
     
