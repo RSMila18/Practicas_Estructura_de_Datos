@@ -172,8 +172,3 @@ class Administrador(Empleado):
             current= current.get_Next()
         Solicitud.toFile(solicitudes_data, "Solicitudes_eliminar.txt")
 #        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
-
-    #crear_usuario( usuario Usuario): Boolean
-    #eliminar_usuario( id Int): Boolean
-    #cambiar_contraseña( id Int, csñ String): Boolean
-    #responder_solicitud(id_s Int, action String): Boolean

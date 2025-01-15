@@ -118,9 +118,3 @@ class Empleado(Usuario):
             for _ in range(L.size(),1):
                 print(current.get_Data())
                 current = current.get_Next() 
-
-
-
-
-    #consultar_inventario(): List<Equipo>
-    
