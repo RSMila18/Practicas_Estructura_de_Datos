@@ -46,6 +46,19 @@ class Investigador(Empleado):
                 else:
                     print("Placa inválida, revise nuevamente.") 
 
+    def consultar_estado_solicitudes(self, empleado):
+        
+        solicitudes_emp = empleado.get_solicitudes()
+        for solicitudes in solicitudes_emp:
+            if solicitudes_emp.size() != 0:
+                current = solicitudes_emp.first()
+                while current is not None:
+                    soli = current.get_Data()
+                    print(f"Estado de su solicitud: {soli.get_estado()}")
+            else:
+                print(f"No tienes ninguna solicitud registrada")
+        
+
     #solicitar_agregar_equipo(equipo Equipo): Boolean
     #solicitar_eliminar_equipo(p int, razon String):Boolean
     #consultar_estado_solicitudes(): List<Solicitud>
