@@ -53,27 +53,17 @@ class Inventario(Equipo):
         return -1
 
     def ordenar_por_placa(self):
-        
-        equipos_lista = []
+     
         current = self.equipos.first()
-    
-        while current is not None:
-            equipos_lista.append(current.get_Data())
-            current = current.get_Next()
-    
         
-        for i in range(1, len(equipos_lista)):
-            key = equipos_lista[i]
-            j = i - 1
-            
-            while j >= 0 and int(equipos_lista[j].get_numero_placa()) > int(key.get_numero_placa()):
-                equipos_lista[j + 1] = equipos_lista[j]
-                j -= 1
-            equipos_lista[j + 1] = key
-    
-        
-        self.equipos = DoubleList()  
-        for equipo in equipos_lista:
-            self.equipos.add_last(equipo)
-            print("Equipos ordenados por número de placa.")
+        for i in range(self.equipos.size()):
+            current = self.equipos.first()
+            for j in range(self.equipos.size() - i - 1):
+                if int(current.get_Data().get_numero_placa()) > int(current.get_Next().get_Data().get_numero_placa()):
+                    temp = current.get_Data()
+                    current.set_Data(current.get_Next().get_Data())
+                    current.get_Next().set_Data(temp)
+                current = current.get_Next()
+
+        print("Equipos ordenados por número de placa.")
 
