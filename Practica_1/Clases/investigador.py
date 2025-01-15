@@ -63,3 +63,10 @@ class Investigador(Empleado):
                     print(f"Estado de su solicitud: {soli.get_estado()}")
             else:
                 print(f"No tienes ninguna solicitud registrada")
+                
+            solicitudes_Emp = []
+            current = solicitudes_emp.first()
+            while current is not None:
+                solicitudes_Emp.append(str(current.get_data()))
+                current= current.get_Next()
+            Solicitud.toFile(solicitudes_Emp, "Estado_Solicitudes.txt")
