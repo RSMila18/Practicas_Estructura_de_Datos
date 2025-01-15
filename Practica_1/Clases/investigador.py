@@ -63,6 +63,3 @@ class Investigador(Empleado):
                     print(f"Estado de su solicitud: {soli.get_estado()}")
             else:
                 print(f"No tienes ninguna solicitud registrada")
-        
-
-    #consultar_estado_solicitudes(): List<Solicitud>
