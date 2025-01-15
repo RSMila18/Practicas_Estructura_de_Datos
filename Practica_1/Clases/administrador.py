@@ -66,7 +66,7 @@ class Administrador(Empleado):
                 return
             current = current.get_Next()  
         print("Empleado no encontrado.")
-               
+
     def eliminar_de_lista(self, lista, nodo_a_eliminar):
         current = lista.first()
         previous = None
@@ -172,8 +172,3 @@ class Administrador(Empleado):
             current= current.get_Next()
         Solicitud.toFile(solicitudes_data, "Solicitudes_eliminar.txt")
 #        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
-
-    #crear_usuario( usuario Usuario): Boolean
-    #eliminar_usuario( id Int): Boolean
-    #cambiar_contraseña( id Int, csñ String): Boolean
-    #responder_solicitud(id_s Int, action String): Boolean
