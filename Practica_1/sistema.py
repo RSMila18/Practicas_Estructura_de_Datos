@@ -7,15 +7,16 @@ class Sistema:
         Investigador.import_password()
 
         print("Bienvenid@, por favor, a continuación ingrese sus credenciales para accder al sistema.\n")
-        id_ = input("Ingrese su número de identificación(cédula): ")
-        password = input("Ingrese su contraseña: ")
+        while True:
+            id_ = input("Ingrese su número de identificación(cédula): ")
+            password = input("Ingrese su contraseña: ")
 
-        empleado = Administrador.buscar(id_)
-        if empleado != -1 and empleado.get_password() == password:
-                Sistema.menu(empleado)
-        else:
-            print("Identificación y/o contraseña incorrecta.")
-            return -1
+            empleado = Administrador.buscar(id_)
+            if empleado != -1 and empleado.get_password() == password:
+                    Sistema.menu(empleado)
+                    break
+            else:
+                print("Identificación y/o contraseña incorrecta.")
 
     def menu(self, empleado):
         if empleado.get_descripcion() == "administrador":
