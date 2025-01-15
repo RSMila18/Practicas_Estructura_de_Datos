@@ -55,18 +55,17 @@ class Investigador(Empleado):
     def consultar_estado_solicitudes(self, empleado):
         
         solicitudes_emp = empleado.get_solicitudes()
-        for solicitudes in solicitudes_emp:
-            if solicitudes_emp.size() != 0:
+        if solicitudes_emp.size() != 0:
+            for _ in range(solicitudes_emp.size(), 1):
                 current = solicitudes_emp.first()
                 while current is not None:
                     soli = current.get_Data()
-                    print(f"Estado de su solicitud: {soli.get_estado()}")
-            else:
-                print(f"No tienes ninguna solicitud registrada")
-                
-            solicitudes_Emp = []
-            current = solicitudes_emp.first()
-            while current is not None:
+                    print(f"Estado de su solicitud del tipo({soli.get_tipo()}):{soli.get_equipo()} ==> {soli.get_estado()}")
+                solicitudes_Emp = []
                 solicitudes_Emp.append(str(current.get_data()))
-                current= current.get_Next()
+                current = current.get_Next()
             Solicitud.toFile(solicitudes_Emp, "Estado_Solicitudes.txt")
+        else:
+            print(f"No tienes ninguna solicitud registrada")
+                
+        
