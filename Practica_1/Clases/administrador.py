@@ -85,7 +85,6 @@ class Administrador(Empleado):
         current = Solicitud.solicitudes.first()
         if current is None:
             print("No hay solicitudes pendientes para gestionar.")
-            return
         
         solicitudes_agregar = List()
         solicitudes_eliminar = List()

@@ -5,6 +5,9 @@ from Clases.solicitud import Solicitud
 
 class Investigador(Empleado):
 
+    def __init__(self, nombre = None, identificacion = None, fecha_nacimiento = None, ciudad_nacimiento = None, telefono = None, email = None, direccion = None, password = None, descripcion = "investigador"):
+        super().__init__(nombre,identificacion,fecha_nacimiento,ciudad_nacimiento,telefono,email,direccion,password,descripcion)
+    
     def __str__(self):
         super().__str__()
     
