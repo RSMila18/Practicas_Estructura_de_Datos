@@ -66,7 +66,7 @@ class Administrador(Empleado):
                 return
             current = current.get_Next()  
         print("Empleado no encontrado.")
-               
+
     def eliminar_de_lista(self, lista, nodo_a_eliminar):
         current = lista.first()
         previous = None
