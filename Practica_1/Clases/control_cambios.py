@@ -55,5 +55,3 @@ class ControlCambios:
             current = current.get_Next()
         ControlCambios.toFile(cambios_data)
         print(f"Los cambios han sido guardados con exito")
-
-    #registrar_cambio(id Int, placa Int, tipo String):Boolean
