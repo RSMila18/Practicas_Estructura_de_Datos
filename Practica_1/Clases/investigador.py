@@ -11,13 +11,13 @@ class Investigador(Empleado):
     def __str__(self):
         super().__str__()
     
-    def solicitar_agregar_equipo(self, empleado):
+    def solicitar_agregar_equipo( empleado):
         while True:
             print("Ingrese los datos del equipo que desee agregar")
             nombre = input(str("Nombre del equipo: "))
             while True:
-                numero_placa = input(int("Número de placa del equipo: "))
-                if numero_placa.isdigit() and len(numero_placa) == 8: 
+                numero_placa = (input("Número de placa del equipo: "))
+                if len(numero_placa) == 8: 
                     break
                 else:
                     print("Número de placa inválido, debe ser de 8 dígitos.") 
@@ -36,7 +36,7 @@ class Investigador(Empleado):
                 print(f"Su solicitud quedo tramitada correctamente con los siguientes datos:\n{solicitud}")
                 break
 
-    def solicitar_eliminar_equipo(self, empleado):
+    def solicitar_eliminar_equipo(empleado):
             while True:
                 numero_placa = input("Número de placa del equipo que desea eliminar: ")
                 
