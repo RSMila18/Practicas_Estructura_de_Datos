@@ -45,6 +45,7 @@ class Empleado(Usuario):
             
             if identificacion == current.get_Data().get_id():
                 return current.get_Data()
+                
             else:
                 current = current.get_Next()       
 

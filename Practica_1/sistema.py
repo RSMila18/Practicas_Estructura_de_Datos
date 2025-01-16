@@ -23,25 +23,34 @@ class Sistema:
             while True:
                 print("\n--- Menú Administrador ---")
                 print("1. Crear nuevo usuario")
-                print("2. Eliminar usuario")
-                print("3. Cambiar contraseña")
-                print("4. Responder solicitudes")
-                print("5. Consultar inventario de un usuario")
-                print("6. Salir")
+                print("2. Buscar Usuario")
+                print("3. Eliminar usuario")
+                print("4. Cambiar contraseña")
+                print("5. Responder solicitudes")
+                print("6. Consultar inventario de un usuario")
+                print("7. Salir")
 
                 opcion = input("Seleccione una opción: ")
                 if opcion == "1":
                     Administrador.crear_usuario()
                 elif opcion == "2":
+                    ident = input("Ingrese la identificación(cédula) del empleado que desea buscar: ")
+                    Administrador.buscar(ident)
+                    if empleado is not None:
+                        print(empleado)
+                    else:
+                        print("Empleado no encontrado.")
+                    
+                elif opcion == "3":
                     ident = input("Ingrese la identificación(cédula) del empleado que desea eliminar: ")
                     Administrador.eliminar_usuario(ident)
-                elif opcion == "3":
-                    Administrador.cambiar_contraseña()
                 elif opcion == "4":
-                    Administrador.responder_solicitudes()
+                    Administrador.cambiar_contraseña()
                 elif opcion == "5":
-                    Administrador.consultar_inventario(empleado)
+                    Administrador.responder_solicitudes()
                 elif opcion == "6":
+                    Administrador.consultar_inventario(empleado)
+                elif opcion == "7":
                     print("Sesión cerrada")
                     break
                 else:

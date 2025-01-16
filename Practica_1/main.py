@@ -7,5 +7,4 @@ if __name__ == "__main__":
     Empleado.import_password()
 
     inicio = Sistema.ingresar_sistema()
-
-
+    
