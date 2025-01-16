@@ -85,6 +85,14 @@ class Administrador(Empleado):
             if empleado.get_id() == int(identificacion):
                 nueva_contraseña = input("Ingrese la nueva contraseña: ")
                 empleado.set_password(nueva_contraseña)  
+
+                conrtra_ac = []
+                current = super().empleados.first()
+                while current is not None:
+                    conrtra_ac.append(str(current.get_Data().get_password()))
+                    current = current.get_Next()
+                Empleado.toFile_password(conrtra_ac, "Password.txt")
+
                 print("Contraseña actualizada exitosamente.")
                 return
             current = current.get_Next()  
