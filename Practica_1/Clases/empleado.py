@@ -3,6 +3,7 @@ from Clases.usuario import Usuario
 from Listas.doble_list import DoubleList
 from Clases.fecha import Fecha
 from Clases.direccion import Direccion
+import os
 
 class Empleado(Usuario):
 
@@ -14,6 +15,7 @@ class Empleado(Usuario):
         self._descripcion = descripcion
         self._inventario = DoubleList()
         self._solicitudes = DoubleList()
+        self.Data = None  
         
     def get_inventario(self):
         return self._inventario
@@ -27,26 +29,32 @@ class Empleado(Usuario):
         return self._descripcion
     def set_descripcion(self, tipo):
         self._descripcion = tipo
+    def get_Data(self):
+        return self.Data
 
     def __str__(self):
         return f'{self._nombre} {self._id} {self._fecha_nacimiento.get_dia()} {self._fecha_nacimiento.get_mes()} {self._fecha_nacimiento.get_A()} {self._ciudad_nacimiento} {self._tel} {self._email} {self._dir.get_calle()} {self._dir.get_nomenclatura()} {self._dir.get_barrio()} {self._dir.get_ciudad()} {self._dir.get_edificio()} {self._dir.get_apto()} {self._password} {self._descripcion}'
     
+    @classmethod
     def buscar(self, identificacion):
+        if Empleado.empleados.is_Empty():
+            return None
         current = Empleado.empleados.first()
         for _ in range(Empleado.empleados.size(),1):
             if identificacion == current.get_Data().get_id():
-                return current
+                return current.get_Data()
             else:
                 current = current.get_Next()       
-        return -1
 
+    @classmethod
     def agregar(self, e):
-        if self.buscar(e.get_id()) != -1:
+        if self.buscar(e.get_id()) != None:
                 return False
         else:
             Empleado.empleados.add_last(e)
             return True
-    
+        
+
     def toFile(filename='Empleados.txt'):
         full_path = "Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
@@ -62,7 +70,8 @@ class Empleado(Usuario):
 
     
     def import_empleados(filename="Empleados.txt"):
-        ruta = "Datos/" + filename
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ruta = os.path.join(current_dir, "Datos", filename)
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()  # Eliminar saltos de línea o espacios extra
@@ -75,15 +84,16 @@ class Empleado(Usuario):
             archivo.close()
     
     def import_password(filename="Password.txt"):
-        ruta = "Datos/" + filename
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ruta = os.path.join(current_dir, "Datos", filename)
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()  # Eliminar saltos de línea o espacios extra
                 new_linea = linea.split(" ")
                 employee = Empleado.buscar(new_linea[0])
-                if employee != -1:
-                    employee.get_Data().set_passwword(new_linea[1])
-                    employee.get_Data().set_descripcion(new_linea[2])
+                if employee != None:
+                    employee.set_password(new_linea[1])
+                    employee.set_descripcion(new_linea[2])
                 else:
                     print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro")
             archivo.close()
