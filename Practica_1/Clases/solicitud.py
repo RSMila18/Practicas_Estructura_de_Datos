@@ -1,5 +1,6 @@
 from Clases.empleado import Empleado
 from Listas.lista_simple import List
+import os
 class Solicitud:
 
     solicitudes = List()
@@ -53,13 +54,12 @@ class Solicitud:
             archivo.close()
 
     def import_solicitud(type_,filename="Empleados.txt"):
-        ruta = "Datos/" + filename
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ruta = os.path.join(current_dir, "Datos", filename)
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
-                linea = linea.strip()  # Eliminar saltos de línea o espacios extra
+                linea = linea.strip()
                 new_linea = linea.split(" ")
-                #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000 (7)
-                #(self, empleado = None, tipo = None._equipo = None):
                 employee = Empleado.buscar(new_linea[1])
                 new_requests = Solicitud(employee, type_, new_linea[3])
                 Solicitud.agregar(new_requests)

@@ -126,8 +126,8 @@ class Administrador(Empleado):
                             continue
                         else:
                             node = DoubleNode(eq)
-                            emp.get_inventario().remove(node) #Eliminar el equipo del inventario
-                            eq.set_empleado(None) #Desasociar el equipo del empleado
+                            emp.get_inventario().remove(node) 
+                            eq.set_empleado(None) 
                             solicitud.aprobar_solicitud()
                             print("Solicitud Aprobada con exito.")
                     else:
@@ -163,7 +163,7 @@ class Administrador(Empleado):
             solicitudes_data.append(str(current.get_data()))
             current= current.get_Next()
         Solicitud.toFile(solicitudes_data, "Solicitudes_agregar.txt")
-#        guardar_datos("Solicitudes_agregar.txt", solicitudes_data)
+
         
         solicitudes_data_eliminar = []
         current = solicitudes_eliminar.first()
@@ -171,4 +171,3 @@ class Administrador(Empleado):
             solicitudes_data_eliminar.append(str(current.get_data()))
             current= current.get_Next()
         Solicitud.toFile(solicitudes_data, "Solicitudes_eliminar.txt")
-#        guardar_datos("Solicitudes_eliminar.txt", solicitudes_data)
