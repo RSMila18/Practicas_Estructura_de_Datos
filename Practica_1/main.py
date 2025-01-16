@@ -6,6 +6,7 @@ from Clases.solicitud import Solicitud
 #   Investigador               Administrador
 #   d13go1979.*                c4100l485Cal$
 #   34568910                   2345902
+#Juan-Perez 24567898 12 10 1980 Medellin 3003233234 juanperez@edl.edu.co kr74 4T-35 Boston Medellin null null
 
 if __name__ == "__main__":
     Empleado.import_empleados()
