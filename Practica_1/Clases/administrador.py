@@ -1,4 +1,4 @@
-from Clases.inventario import Inventario
+from Clases.control_cambios import ControlCambios
 from Clases.empleado import Empleado
 from Clases.fecha import Fecha
 from Listas.doble_node import DoubleNode
@@ -51,7 +51,7 @@ class Administrador(Empleado):
         nodo = Empleado.buscar(identificacion) #nodo = Empleado | -1(Int)
         found = False
 
-        if nodo is not None and nodo is not -1:
+        if nodo is not None and nodo != -1:
             print(f"Verificando empleado: {nodo.get_id()}")
             if nodo.get_id() ==  identificacion: 
                 found = Empleado.eliminar(nodo)
@@ -97,6 +97,7 @@ class Administrador(Empleado):
             current = current.get_Next()
     @classmethod   
     def responder_solicitudes(self):
+        changes = []
         current = Solicitud.solicitudes.first()
         if current is None:
             print("No hay solicitudes pendientes para gestionar.")
@@ -129,19 +130,33 @@ class Administrador(Empleado):
                         solicitud.aprobar_solicitud()
                         emp.agregar_inventario(eq)
                         print("Solicitud Aprobada con exito.")
+                        solicitud.get_cambios()
+                        ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo())
                     else:
                         print("El numero de placa no existe.")
                         continue
-                elif solicitud.get_tipo() == "Eliminar":
+                elif solicitud.get_tipo() == "Editar":
                     if eq != -1:
                         if eq.get_empleado().get_nombre() != solicitud.get_empleado().get_nombre():
                             print("No se puede Aprobar esta solicitud porque el equipo esta asociado a otro empleado.")
                             continue
                         else:
-                            node = DoubleNode(eq)
-                            emp.get_inventario().remove(node) 
+                            temp = emp.get_inventario().first()
+                            
+                            while temp is not None:
+                                if temp.get_Data() == eq:
+                                    if temp == emp.get_inventario().first():
+                                        emp.get_inventario().remove_first()
+                                    elif temp == emp.get_inventario().last():
+                                        emp.get_inventario().remove_Last()
+                                    else:
+                                        Nodo = temp
+                                        break
+                            #emp.get_inventario().remove(Nodo)
                             eq.set_empleado(None) 
                             solicitud.aprobar_solicitud()
+                            solicitud.get_cambios()
+                            ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo())
                             print("Solicitud Aprobada con exito.")
                     else:
                         print("El numero de placa no existe.")
@@ -153,6 +168,10 @@ class Administrador(Empleado):
 
             elif decision == 2:
                 solicitud.rechazar_solicitud()
+                solicitud.get_cambios()
+                ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo())
+                
+                #(self, id_empleado = None, numero_placa = None, tipo_cambio = None)
                 print("Solicitud Rechazada con exito.")
             else:
                 print("Decisión inválida. Saltando a la siguiente solicitud.")
@@ -171,11 +190,14 @@ class Administrador(Empleado):
                 self.eliminar_de_lista(Solicitud.solicitudes, current)
             current = siguiente
         
+
+
         solicitudes_data = []
         current = solicitudes_agregar.first()
         while current is not None:
             solicitudes_data.append(str(current.get_data()))
             current= current.get_Next()
+            Solicitud.toFil_()
         Solicitud.toFile(solicitudes_data, "Solicitudes_agregar.txt")
 
         
@@ -184,4 +206,7 @@ class Administrador(Empleado):
         while current is not None:
             solicitudes_data_eliminar.append(str(current.get_data()))
             current= current.get_Next()
+            Solicitud.toFil_()
         Solicitud.toFile(solicitudes_data, "Solicitudes_eliminar.txt")
+
+        Solicitud.toFil_()

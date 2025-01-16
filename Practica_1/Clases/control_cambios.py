@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from Listas.lista_simple import List
 from Clases.fecha import Fecha
@@ -14,6 +15,8 @@ class ControlCambios:
         self._fecha = fecha_actual
         self._hora = datetime.now()
     
+    def get_list():
+        return ControlCambios.registrar_cambio
     def get_id_empleado(self):
         return self._id_empleado
     def set_id_empleado(self, ide):
@@ -28,21 +31,24 @@ class ControlCambios:
         self._tipo_cambio = tipo
     def get_fecha(self):
         return self._fecha
+    def set_fecha(self,fecha):
+        self._fecha = fecha
     def get_hora(self):
         return self._hora    
     def __str__(self):
     
         return f'{self._id_empleado} {self._numero_placa} {self._tipo_cambio} {self._fecha.get_dia()} {self._fecha.get_mes()} {self._fecha.get_A()} {self._hora}'
 
-    def toFile(self, changes, filename='Control_de_cambios.txt'):
-        full_path = "Practica_1/Datos/" + filename 
+    def toFile(changes, filename='Control_de_cambios.txt'):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", filename)
+        #full_path = "Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
-
             for cambios in changes:
                 archivo.write(str(cambios) + "\n")
             archivo.close()
 
-    def registrar_cambio(self, id_empleado, numero_placa, tipo_cambio):
+    def registrar_cambio(id_empleado, numero_placa, tipo_cambio):
         
         cambio = ControlCambios(id_empleado, numero_placa, tipo_cambio)
         ControlCambios.registro_cambios.add_Last(cambio)
@@ -55,3 +61,19 @@ class ControlCambios:
             current = current.get_Next()
         ControlCambios.toFile(cambios_data)
         print(f"Los cambios han sido guardados con exito")
+
+    def import_control(filename="Control_de_cambios.txt"):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ruta = os.path.join(current_dir, "Datos", filename)
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                linea = linea.strip()  
+                new_linea = linea.split(" ")
+                #34568910 50109774 Editar 16 1 2025 2025-01-16 14:54:37.019185
+                #0          1       2       345       6          7
+                S = ControlCambios.get_list()
+                N = ControlCambios(new_linea[0], new_linea[1], new_linea[2])
+                F = new_linea[6].split("-")
+                N.set_fecha(Fecha(F[0],F[1],F[2]))
+                #print(f"Empleado: {new_employees} \n")
+            archivo.close()

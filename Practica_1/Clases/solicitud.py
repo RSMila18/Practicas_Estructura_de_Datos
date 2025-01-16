@@ -6,6 +6,7 @@ import os
 class Solicitud:
 
     solicitudes = List()
+    cambios_solicitudes = List()
 
     def __init__(self, empleado = None, tipo = None, equipo = None):
         self._empleado = empleado #Empleado
@@ -14,6 +15,9 @@ class Solicitud:
         self._equipo = equipo
         self._justificacion = " "
     
+    def get_cambios(self):
+        Solicitud.cambios_solicitudes.add_Last(self)
+
     def get_empleado(self):
         return self._empleado
     def set_empleado(self, ide):
@@ -58,6 +62,15 @@ class Solicitud:
             Solicitud.solicitudes.add_Last(s)
             #print("Solicitud agregada con exito")
             
+    def toFil_(filename='Solicitudes.txt'):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", filename)
+        with open(full_path, "w", encoding="utf-8") as archivo:
+            current = Solicitud.cambios_solicitudes.first()
+            while current is not None:
+                soli = current.get_Data()
+                archivo.write(str(soli) + " " + str(soli.get_estado()) + "\n") 
+                current = current.get_Next()
     
     def toFile(requests, filename='Solicitudes.txt'):
         current_dir = os.path.dirname(os.path.abspath(__file__))

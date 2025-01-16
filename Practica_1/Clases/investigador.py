@@ -78,6 +78,16 @@ class Investigador(Empleado):
         from Clases.solicitud import Solicitud  # Importar la clase Solicitud
         Solicitud.toFile(solicitudes_Emp, "Estado_Solicitudes.txt")
 
+    def descarga(e):
+        D = e.get_inventario()
+        c = []
+        current = D.first()
+        for _ in range(D.size()):
+            c.append(current.get_Data())
+            current = current.get_Next()
+            filename = str(e.get_nombre()) + " " + str(e.get_id())
+            Solicitud.toFile(c, filename)
+
 
 
 

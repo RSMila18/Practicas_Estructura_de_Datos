@@ -65,7 +65,8 @@ class Sistema:
                 print("2. Solicitar agregar equipo")
                 print("3. Solicitar eliminar equipo")
                 print("4. Consultar estado de solicitudes")
-                print("5. Salir")
+                print("5. Descargar reporte de solicitudes")
+                print("6. Salir")
 
                 opcion = input("Seleccione una opción: ")
                 if opcion == "1":
@@ -77,6 +78,8 @@ class Sistema:
                 elif opcion == "4":
                     Investigador.consultar_estado_solicitudes(empleado)
                 elif opcion == "5":
+                    Investigador.descarga(empleado)
+                elif opcion == "6":
                     print("Sesión cerrada")
                     break
                 else:
