@@ -17,7 +17,9 @@ class Empleado(Usuario):
         self._inventario = DoubleList()
         self._solicitudes = DoubleList()
         self.Data = None  
-        
+    
+    def get_id(self):
+        return super().get_id()    
     def get_inventario(self):
         return self._inventario
     def get_solicitudes(self):

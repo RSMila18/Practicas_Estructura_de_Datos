@@ -53,7 +53,7 @@ class Inventario(Equipo):
         return -1
 
     def ordenar_por_placa(self):
-     
+
         current = self.equipos.first()
         
         for i in range(self.equipos.size()):
