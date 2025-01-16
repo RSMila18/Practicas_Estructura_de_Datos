@@ -44,9 +44,12 @@ class Solicitud:
         else:
             Solicitud.solicitudes.add_last(s)
             print("Solicitud agregada con exito")
+            
     
     def toFile(requests, filename='Solicitudes.txt'):
-        full_path = "Datos/" + filename 
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", filename)
+        #full_path = "Datos/" + filename 
         with open(full_path, "w", encoding="utf-8") as archivo:
 
             for solicitud in requests:

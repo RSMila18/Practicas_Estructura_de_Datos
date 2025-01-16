@@ -35,15 +35,16 @@ class Sistema:
                     Administrador.crear_usuario()
                 elif opcion == "2":
                     ident = input("Ingrese la identificación(cédula) del empleado que desea buscar: ")
-                    Administrador.buscar(ident)
-                    if empleado is not None and ident.isdigit():
-                        print(empleado)
+                    emp = Administrador.buscar(int(ident))
+                    if emp is not None and ident.isdigit():
+                        print(emp)
                     else:
                         print("Empleado no encontrado.")
                     
                 elif opcion == "3":
                     ident = input("Ingrese la identificación(cédula) del empleado que desea eliminar: ")
-                    Administrador.eliminar_usuario(ident)
+                    if ident.isdigit():
+                        Administrador.eliminar_usuario(ident)
                 elif opcion == "4":
                     Administrador.cambiar_contraseña()
                 elif opcion == "5":

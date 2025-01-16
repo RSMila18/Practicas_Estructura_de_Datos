@@ -37,7 +37,7 @@ class Empleado(Usuario):
         return f'{self._nombre} {self._id} {self._fecha_nacimiento.get_dia()} {self._fecha_nacimiento.get_mes()} {self._fecha_nacimiento.get_A()} {self._ciudad_nacimiento} {self._tel} {self._email} {self._dir.get_calle()} {self._dir.get_nomenclatura()} {self._dir.get_barrio()} {self._dir.get_ciudad()} {self._dir.get_edificio()} {self._dir.get_apto()} {self._password} {self._descripcion}'
     
     @classmethod
-    def buscar(self, identificacion):
+    def buscar(cls, identificacion):
         if Empleado.empleados.is_Empty():
             return None
         current = Empleado.empleados.first()
@@ -48,29 +48,24 @@ class Empleado(Usuario):
                 
             else:
                 current = current.get_Next()       
-
     @classmethod
-    def agregar(self, e):
-        if self.buscar(e.get_id()) != None:
+    def agregar(cls, e):
+        if cls.buscar(e.get_id()) != None:
                 return False
         else:
             Empleado.empleados.add_last(e)
             return True
         
 
-    def toFile(filename='Empleados.txt'):
+    def toFile(empleados, filename='Empleados.txt'):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         full_path = os.path.join(current_dir, "Datos", filename)
         with open(full_path, "w", encoding="utf-8") as archivo:
-            employees = []
             current = Empleado.empleados.first()
-            for _ in range(Empleado.empleados.size(),1):
-                employees.append(current)
-                current = current.get_Next().get_Data()
-
-            for empleado in employees:
-                archivo.write(str(empleado) + "\n")
-            archivo.close()
+            while current is not None:
+                empleado = current.get_Data()
+                archivo.write(str(empleado) + "\n") 
+                current = current.get_Next()
 
     @staticmethod
     def import_empleados(filename="Empleados.txt"):
@@ -104,7 +99,7 @@ class Empleado(Usuario):
                     print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro \n")
             archivo.close()
                     
-    
+    @staticmethod
     def consultar_inventario(e):
         if e.get_descripcion() == "administrador":
             print("\n--- Consultar Inventario ---")

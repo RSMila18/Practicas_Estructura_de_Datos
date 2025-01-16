@@ -4,6 +4,7 @@ from Clases.fecha import Fecha
 from Listas.doble_node import DoubleNode
 from Clases.solicitud import Solicitud
 from Listas.lista_simple import List
+from Clases.direccion import Direccion
 
 class Administrador(Empleado):
 
@@ -29,31 +30,47 @@ class Administrador(Empleado):
         ciudad = input("Ciudad: ")
         edificio = input("Urbanización: ")
         apto = input("Apartamento: ")
-        direccion = (calle, nomenclatura, barrio, ciudad, edificio, apto)
+        direccion = Direccion(calle, nomenclatura, barrio, ciudad, edificio, apto)
         password = input("Ingrese una contraseña: ")
         descripcion = input("Ingrese el rol del empleado: ")
         
         empleado = Empleado(nombre, identificacion, fecha_nacimiento, ciudad_nacimiento, telefono, email, direccion, password, descripcion)
-        super().empleados.add_last(empleado)
-    
-    def eliminar_usuario(self, identificacion_):
-        identificacion_ = input("Ingrese la identificación del usuario a eliminar: ")
-
-        current = super().empleados.first() 
-        found = False
+        Empleado.empleados.add_last(empleado)
+        
+        empleados_actua = []
+        current = Empleado.empleados.first()
         while current is not None:
+            empleados_actua.append(str(current.get_Data()))
+            current= current.get_Next()
+        Empleado.toFile(empleados_actua, "Empleados.txt")
+    
+    @classmethod
+    def eliminar_usuario(cls,  identificacion):
+        print(f"Intentando eliminar el usuario con ID: {identificacion}")
+        nodo = cls.buscar(identificacion)
+        found = False
+        while nodo is not None:
             empleado = current.get_Data()
-            if empleado.identificacion == identificacion_: 
-                super().empleados.remove(current)  
+            print(f"Verificando empleado: {nodo.get_id()}")
+            if empleado.get_id() ==  identificacion: 
+                Empleado.empleados.remove(nodo)
+                #self.eliminar_de_lista(super().empleados, current) 
                 found = True
                 break
             current = current.get_Next()
         if found:
-            self._password.pop(identificacion_, None) 
             print("Usuario eliminado exitosamente.")
+            empleados_actua = []
+            current = super().empleados.first()
+            while current is not None:
+                empleados_actua.append(str(current.get_Data()))
+                current = current.get_Next()
+            Empleado.toFile(empleados_actua, "Empleados.txt") 
+            
+            #self._password.remove(identificacion, None) 
         else:
             print("Usuario no encontrado.")
-            
+    @classmethod        
     def cambiar_contraseña(self):
         identificacion = input("Ingrese la identificación del empleado: ")
         current = super().empleados.first()
@@ -80,7 +97,7 @@ class Administrador(Empleado):
                 return
             previous = current
             current = current.get_Next()
-        
+    @classmethod   
     def responder_solicitudes(self):
         current = Solicitud.solicitudes.first()
         if current is None:
