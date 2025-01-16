@@ -39,12 +39,22 @@ class Equipo:
 
     def buscar(placa):
         current = Equipo.equipos.first()
-        for _ in range(Equipo.equipos.size(),1):
+        for _ in range(Equipo.equipos.size()):
             if int(placa) == current.get_Data().get_numero_placa():
-                return current
+                return current.get_Data()
             else:
-                current = current.get_Next()       
-        return -1
+                current = current.get_Next()
+
+    def toFile(empleados, filename='InventarioGeneral.txt'):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", filename)
+        with open(full_path, "w", encoding="utf-8") as archivo:
+            current = Equipo.equipos.first()
+            while current is not None:
+                equipo = current.get_Data()
+                archivo.write(str(equipo) + "\n") 
+                current = current.get_Next()
+
 
     @staticmethod
     def import_equipos(filename="InventarioGeneral.txt"):

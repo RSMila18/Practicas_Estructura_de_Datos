@@ -14,9 +14,9 @@ class Investigador(Empleado):
     def solicitar_agregar_equipo(self, empleado):
         while True:
             print("Ingrese los datos del equipo que desee agregar")
-            nombre = input("Nombre del equipo: ")
+            nombre = input(str("Nombre del equipo: "))
             while True:
-                numero_placa = input("Número de placa del equipo: ")
+                numero_placa = input(int("Número de placa del equipo: "))
                 if numero_placa.isdigit() and len(numero_placa) == 8: 
                     break
                 else:
@@ -26,7 +26,7 @@ class Investigador(Empleado):
             fecha = Fecha(linea[0],linea[1],linea[2])
             valor_compra = int(input("valor de compra de quipo: "))
 
-            equipo = Inventario.buscar(numero_placa)
+            equipo = Inventario.buscar(int(numero_placa))
             if equipo == -1 or equipo.get_fecha_compra() != fecha or equipo.get_valor_compra() != valor_compra:
                 print("Los datos del equipo son incorrectos. Ingreselos de nuevo para que su solicitud pueda ser tramitada.")
             

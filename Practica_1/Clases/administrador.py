@@ -81,7 +81,7 @@ class Administrador(Empleado):
             current = current.get_Next()  
         print("Empleado no encontrado.")
 
-    def eliminar_de_lista(self, lista, nodo_a_eliminar):
+    def eliminar_de_lista(lista, nodo_a_eliminar):
         current = lista.first()
         previous = None
         while current is not None:
@@ -116,20 +116,18 @@ class Administrador(Empleado):
             print(f"Valor de Compra: {solicitud.get_equipo().get_valor_compra()}")
             print(f"Justificación: {solicitud.get_justificacion()}")
 
-            decision = input("¿Aprobar o Rechazar? ").strip().upper()
+            decision = input("¿ 1. Aprobar o 2. Rechazar? ")
+            decision = int(decision)
 
-            eq = Inventario.buscar(solicitud.get_numero_placa())
+            eq = solicitud.get_equipo()
             emp = solicitud.get_empleado()
-            if decision == "Aprobar":
+            if decision == 1:
                 if solicitud.get_tipo() == "Agregar":
                     if eq != -1:
-                        if eq.get_empleado().get_nombre() != None:
-                            print("No se puede Aprobar esta solicitud porque el equipo esta asociado a otro empleado.")
-                            continue
-                        else:
-                            eq.set_empleado(emp)
-                            solicitud.aprobar_solicitud()
-                            print("Solicitud Aprobada con exito.")
+                        eq.set_empleado(emp)
+                        solicitud.aprobar_solicitud()
+                        emp.agregar_inventario(eq)
+                        print("Solicitud Aprobada con exito.")
                     else:
                         print("El numero de placa no existe.")
                         continue
@@ -152,7 +150,7 @@ class Administrador(Empleado):
                     print("El tipo de la solicitud es invalido.")
                     continue
 
-            elif decision == "Rechazar":
+            elif decision == 2:
                 solicitud.rechazar_solicitud()
                 print("Solicitud Rechazada con exito.")
             else:
@@ -160,15 +158,16 @@ class Administrador(Empleado):
                 current = current.get_Next()
                 continue
             
-            if Solicitud.get_estado(self)== "Pendiente":
+            if solicitud.get_estado()== "Pendiente":
                 if solicitud.get_tipo()== "Agregar":
                     solicitudes_agregar.add_Last(str(solicitud))
-                elif solicitud.get_tipo()== "Eliminar":
+                elif solicitud.get_tipo()== "Editar":
                     solicitudes_eliminar.add_Last(str(solicitud))
                     
                     
             siguiente = current.get_Next()
-            self.eliminar_de_lista(solicitud.solicitudes, current)
+            if solicitud.get_estado() != "Pendiente":
+                self.eliminar_de_lista(solicitud.solicitudes, current)
             current = siguiente
         
         solicitudes_data = []

@@ -1,5 +1,6 @@
 from Clases.empleado import Empleado
 from Clases.equipo import Equipo
+from Clases.fecha import Fecha
 from Listas.lista_simple import List
 import os
 class Solicitud:
@@ -55,7 +56,7 @@ class Solicitud:
                 print("Empleado no existe")
         else:
             Solicitud.solicitudes.add_Last(s)
-            print("Solicitud agregada con exito")
+            #print("Solicitud agregada con exito")
             
     
     def toFile(requests, filename='Solicitudes.txt'):
@@ -75,9 +76,24 @@ class Solicitud:
             for linea in archivo:
                 linea = linea.strip()
                 new_linea = linea.split(" ")
+                #print(new_linea)
                 if len(new_linea) == 7:
                     employee = Empleado.buscar(int(2345934))
                     product = Equipo.buscar(new_linea[2])
+                    if type_ == "Agregar":
+                        #(self, nombre = None, numero_placa = None, fecha_compra = None, valor_compra = None, empleado = None)
+                        #Tatiana-Ramirez CPURYZEN_6T_4GB 50246341 23 10 2022 1590000
+                        f = Fecha(new_linea[3],new_linea[4],new_linea[5])
+                        s = Equipo(new_linea[1],new_linea[2],f,new_linea[6],employee)   
+                        product = s
+                        Equipo.equipos.add_last(product)
+                        D = []
+                        current = Equipo.equipos.first()
+                        for _ in range(Equipo.equipos.size()):
+                                D.append(current.get_Data())
+                                current = current.get_Next()
+                        Equipo.toFile(D)
+
                 elif len(new_linea) < 7:
                     employee = None
                     product = None
@@ -86,15 +102,33 @@ class Solicitud:
                 #def __init__(self, empleado = None, tipo = None, equipo = None)
                 else:
                     employee = Empleado.buscar(int(new_linea[1]))
-                    product = Equipo.buscar(new_linea[3])
+                    product = Equipo.buscar(int(new_linea[3]))
+
+                    if type_ == "Agregar":
+                        #(self, nombre = None, numero_placa = None, fecha_compra = None, valor_compra = None, empleado = None)
+                        f = Fecha(new_linea[4],new_linea[5],new_linea[6])
+                        s = Equipo(new_linea[2],new_linea[3],f,new_linea[7],employee)   
+                        product = s
+                        Equipo.equipos.add_last(product)
+                        L = []
+                        current = Equipo.equipos.first()
+                        for _ in range(Equipo.equipos.size()):
+                                L.append(current.get_Data())
+                                current = current.get_Next()
+                        Equipo.toFile(L)
+
                 new_requests = Solicitud(employee, type_, product)
                 if employee != None:
                     employee.agregar_solicitud(new_requests)
                     Solicitud.agregar(int(employee.get_id()), new_requests)
+                    #print(product)
+                    #print(new_requests)
             archivo.close()
             
     def __str__(self):
         #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000
         if self._empleado == None and self._equipo == None:
             return None
-        return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {self._equipo.get_nombre()} {self._equipo.get_numero_placa()} {self._equipo.get_fecha_compra().get_dia()} {self._equipo.get_fecha_compra().get_mes()} {self._equipo.get_fecha_compra().get_A()} {self._equipo.get_valor_compra()}'  
+        elif self._equipo == None:
+            return
+        return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {self._equipo.get_nombre()} {str(self._equipo.get_numero_placa())} {self._equipo.get_fecha_compra().get_dia()} {self._equipo.get_fecha_compra().get_mes()} {self._equipo.get_fecha_compra().get_A()} {self._equipo.get_valor_compra()}'  
