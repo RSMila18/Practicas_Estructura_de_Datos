@@ -167,7 +167,7 @@ class Administrador(Empleado):
                     
             siguiente = current.get_Next()
             if solicitud.get_estado() != "Pendiente":
-                self.eliminar_de_lista(solicitud.solicitudes, current)
+                self.eliminar_de_lista(Solicitud.solicitudes, current)
             current = siguiente
         
         solicitudes_data = []
