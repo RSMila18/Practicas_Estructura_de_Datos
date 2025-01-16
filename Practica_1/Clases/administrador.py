@@ -43,6 +43,8 @@ class Administrador(Empleado):
             empleados_actua.append(str(current.get_Data()))
             current= current.get_Next()
         Empleado.toFile(empleados_actua, "Empleados.txt")
+        Empleado.toFile_password(empleado.get_password, "Password.txt")
+    
     
     @classmethod
     def eliminar_usuario(cls,  identificacion):
@@ -62,9 +64,15 @@ class Administrador(Empleado):
             while current is not None:
                 empleados_actua.append(str(current.get_Data()))
                 current = current.get_Next()
-            Empleado.toFile(empleados_actua, "Empleados.txt") 
-            
-            #self._password.remove(identificacion, None) 
+            Empleado.toFile(empleados_actua, "Empleados.txt")  
+
+            conrtra_ac = []
+            current = super().empleados.first()
+            while current is not None:
+                conrtra_ac.append(str(current.get_Data().get_password()))
+                current = current.get_Next()
+            Empleado.toFile_password(conrtra_ac, "Password.txt")
+
         else:
             print("Usuario no encontrado.")
     @classmethod        
@@ -77,6 +85,14 @@ class Administrador(Empleado):
             if empleado.get_id() == int(identificacion):
                 nueva_contraseña = input("Ingrese la nueva contraseña: ")
                 empleado.set_password(nueva_contraseña)  
+
+                conrtra_ac = []
+                current = super().empleados.first()
+                while current is not None:
+                    conrtra_ac.append(str(current.get_Data().get_password()))
+                    current = current.get_Next()
+                Empleado.toFile_password(conrtra_ac, "Password.txt")
+
                 print("Contraseña actualizada exitosamente.")
                 return
             current = current.get_Next()  

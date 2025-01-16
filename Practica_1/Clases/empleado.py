@@ -134,6 +134,16 @@ class Empleado(Usuario):
                 else:
                     print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro \n")
             archivo.close()
+
+    def toFile_password(_password, filename='Password.txt'):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", filename)
+        with open(full_path, "w", encoding="utf-8") as archivo:
+            current = Empleado.empleados.first()
+            while current is not None:
+                empleado = current.get_Data()
+                archivo.write(f"{empleado.get_id()} {empleado.get_password()} {empleado.get_descripcion()}\n")
+                current = current.get_Next()
                     
     @staticmethod
     def consultar_inventario_E(e):
