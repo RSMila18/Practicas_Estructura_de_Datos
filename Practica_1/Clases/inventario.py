@@ -44,13 +44,7 @@ class Inventario(Equipo):
                 return True
     
     def buscar(self, placa):
-        current = Equipo.equipos.first()
-        for _ in range(Equipo.equipos.size(),1):
-            if placa == current.get_Data().get_numero_placa():
-                return current
-            else:
-                current = current.get_Next()       
-        return -1
+        super().buscar()
 
     def ordenar_por_placa(self):
 

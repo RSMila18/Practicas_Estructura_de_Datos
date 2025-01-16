@@ -1,5 +1,4 @@
 import os
-from Clases.equipo import Equipo
 from Clases.usuario import Usuario
 from Listas.doble_list import DoubleList
 from Clases.fecha import Fecha
@@ -16,8 +15,12 @@ class Empleado(Usuario):
         self._descripcion = descripcion
         self._inventario = DoubleList()
         self._solicitudes = DoubleList()
-        self.Data = None  
+        self.Data = None
     
+    def agregar_inventario(self,e):
+        self._inventario.add_last(e)
+    def agregar_solicitud(self,s):
+        self._solicitudes.add_last(s)
     def get_id(self):
         return super().get_id()    
     def get_inventario(self):
@@ -127,7 +130,8 @@ class Empleado(Usuario):
             archivo.close()
                     
     @staticmethod
-    def consultar_inventario(e):
+    def consultar_inventario_E(e):
+        from Clases.equipo import Equipo
         if e.get_descripcion() == "administrador":
             print("\n--- Consultar Inventario ---")
             print("1. Inventario General")
@@ -137,7 +141,7 @@ class Empleado(Usuario):
                 Equipo.consultar_inventario()
             elif opcion == "2":
                 ident = input("Ingrese la identificación(cédula) del empleado al que le desea ver el inventario: ")
-                user = Empleado.buscar(ident)
+                user = Empleado.buscar(int(ident))
                 if user == -1:
                     print("Empleado no encontrado.")
                 else:
@@ -147,7 +151,7 @@ class Empleado(Usuario):
                         print("El inventario del empleado se encuentra vacio.")
                     else:
                         current = L.first()
-                        for _ in range(L.size(),1):
+                        for _ in range(L.size()):
                             print(current.get_Data())
                             current = current.get_Next() 
             else:
@@ -158,7 +162,8 @@ class Empleado(Usuario):
             if D.is_Empty():
                 print("El inventario del empleado se encuentra vacio.")
             else:
+                print("Este es su inventario:\n")
                 current = D.first()
-                for _ in range(L.size(),1):
+                for _ in range(D.size()):
                     print(current.get_Data())
-                    current = current.get_Next() 
+                    current = current.get_Next()

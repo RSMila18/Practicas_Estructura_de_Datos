@@ -50,7 +50,7 @@ class Sistema:
                 elif opcion == "5":
                     Administrador.responder_solicitudes()
                 elif opcion == "6":
-                    Administrador.consultar_inventario(empleado)
+                    Administrador.consultar_inventario_E(empleado)
                 elif opcion == "7":
                     print("Sesión cerrada")
                     break
@@ -69,7 +69,7 @@ class Sistema:
 
                 opcion = input("Seleccione una opción: ")
                 if opcion == "1":
-                    Investigador.consultar_inventario(empleado)
+                    Investigador.consultar_inventario_E(empleado)
                 elif opcion == "2":
                     Investigador.solicitar_agregar_equipo(empleado)
                 elif opcion == "3":

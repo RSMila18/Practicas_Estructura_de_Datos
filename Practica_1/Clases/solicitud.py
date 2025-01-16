@@ -1,4 +1,5 @@
 from Clases.empleado import Empleado
+from Clases.equipo import Equipo
 from Listas.lista_simple import List
 import os
 class Solicitud:
@@ -11,7 +12,6 @@ class Solicitud:
         self._estado = "Pendiente"
         self._equipo = equipo
         self._justificacion = " "
-        Solicitud.solicitudes.add_Last(self)
     
     def get_empleado(self):
         return self._empleado
@@ -37,12 +37,24 @@ class Solicitud:
         self._estado = "aprobada"
     def rechazar_solicitud(self):
         self._estado = "rechazada"
+
+    def buscar_solicitud(type_):
+        D = Solicitud.solicitudes
+        if D.is_Empty():
+            print("No hay solicitudes.")
+        else:
+            print(f"Estas son las Solicitudes de {str(type_)}:\n")
+            current = D.first()
+            for _ in range(D.size()):
+                if current.get_Data().get_tipo() == str(type_):
+                    print(current.get_Data())
+                    current = current.get_Next()
     
     def agregar(ident, s):
-        if Empleado.buscar(ident) != -1:
+        if ident == '' or Empleado.buscar(ident) == -1:
                 print("Empleado no existe")
         else:
-            Solicitud.solicitudes.add_last(s)
+            Solicitud.solicitudes.add_Last(s)
             print("Solicitud agregada con exito")
             
     
@@ -56,18 +68,33 @@ class Solicitud:
                 archivo.write(str(solicitud) + "\n")
             archivo.close()
 
-    def import_solicitud(type_,filename="Empleados.txt"):
+    def import_solicitud(type_, filename="Solicitudes.txt"):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ruta = os.path.join(current_dir, "Datos", filename)
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()
                 new_linea = linea.split(" ")
-                employee = Empleado.buscar(new_linea[1])
-                new_requests = Solicitud(employee, type_, new_linea[3])
-                Solicitud.agregar(new_requests)
+                if len(new_linea) == 7:
+                    employee = Empleado.buscar(int(2345934))
+                    product = Equipo.buscar(new_linea[2])
+                elif len(new_linea) < 7:
+                    employee = None
+                    product = None
+                    
+                #Diego-Palacio 34568910 CAMARA_MONOCROMATICA 50109773 9 12 2021 1786000
+                #def __init__(self, empleado = None, tipo = None, equipo = None)
+                else:
+                    employee = Empleado.buscar(int(new_linea[1]))
+                    product = Equipo.buscar(new_linea[3])
+                new_requests = Solicitud(employee, type_, product)
+                if employee != None:
+                    employee.agregar_solicitud(new_requests)
+                    Solicitud.agregar(int(employee.get_id()), new_requests)
             archivo.close()
             
     def __str__(self):
         #Juan-Perez 24567898 MONITOR_DELL 50245329 23 10 2022 745000
+        if self._empleado == None and self._equipo == None:
+            return None
         return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {self._equipo.get_nombre()} {self._equipo.get_numero_placa()} {self._equipo.get_fecha_compra().get_dia()} {self._equipo.get_fecha_compra().get_mes()} {self._equipo.get_fecha_compra().get_A()} {self._equipo.get_valor_compra()}'  

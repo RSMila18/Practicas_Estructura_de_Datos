@@ -1,4 +1,7 @@
+from __future__ import annotations
+import os
 from Listas.doble_list import DoubleList
+from Clases.fecha import Fecha
 
 class Equipo:
     equipos = DoubleList()
@@ -32,10 +35,38 @@ class Equipo:
     def set_empleado(self, empleado):
         self._empleado = empleado
     def __str__(self):
-        return f'{self._empleado.get_nombre()} {self._empelado.get_id()} {self._nombre} {self._numero_placa} {self._fecha_compra.get_dia()} {self._fecha_compra.get_mes()} {self._fecha_compra.get_A()} {self._valor_compra}'
+        return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {self._nombre} {self._numero_placa} {self._fecha_compra.get_dia()} {self._fecha_compra.get_mes()} {self._fecha_compra.get_A()} {self._valor_compra}'
 
-    def consultar_inventario(self):
+    def buscar(placa):
         current = Equipo.equipos.first()
         for _ in range(Equipo.equipos.size(),1):
+            if int(placa) == current.get_Data().get_numero_placa():
+                return current
+            else:
+                current = current.get_Next()       
+        return -1
+
+    @staticmethod
+    def import_equipos(filename="InventarioGeneral.txt"):
+        from Clases.empleado import Empleado
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ruta = os.path.join(current_dir, "Datos", filename)
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                linea = linea.strip()  
+                new_linea = linea.split(" ")
+                #def __init__(self, nombre = None, numero_placa = None, fecha_compra = None, valor_compra = None, empleado = None
+                #Pedro-Gomez 1075689 MONITOR_DELL 50245325 1 4 2016 300000
+                new_employees = Empleado.buscar(int(new_linea[1]))
+                new_fecha = Fecha(new_linea[4], new_linea[5], new_linea[6])
+                new_product = Equipo(new_linea[2], int(new_linea[3]), new_fecha, int(new_linea[7]), new_employees)
+                new_employees.agregar_inventario(new_product)
+                Equipo.equipos.add_last(new_product)
+                #print(f"{new_product}")
+            archivo.close()
+    
+    def consultar_inventario():
+        current = Equipo.equipos.first()
+        for _ in range(Equipo.equipos.size()):
             print(current.get_Data())
             current = current.get_Next()
