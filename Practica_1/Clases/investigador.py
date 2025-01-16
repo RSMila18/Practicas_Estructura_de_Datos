@@ -51,21 +51,73 @@ class Investigador(Empleado):
                     break
                 else:
                     print("Placa inválida, revise nuevamente.") 
-
-    def consultar_estado_solicitudes(self, empleado):
-        
+    
+   
+    @classmethod
+    def consultar_estado_solicitudes(cls, empleado):
+        # Obtener las solicitudes del empleado
         solicitudes_emp = empleado.get_solicitudes()
-        if solicitudes_emp.size() != 0:
-            for _ in range(solicitudes_emp.size(), 1):
-                current = solicitudes_emp.first()
-                while current is not None:
-                    soli = current.get_Data()
-                    print(f"Estado de su solicitud del tipo({soli.get_tipo()}):{soli.get_equipo()} ==> {soli.get_estado()}")
-                solicitudes_Emp = []
-                solicitudes_Emp.append(str(current.get_data()))
-                current = current.get_Next()
-            Solicitud.toFile(solicitudes_Emp, "Estado_Solicitudes.txt")
-        else:
-            print(f"No tienes ninguna solicitud registrada")
-                
+        
+        # Verificar si el empleado tiene solicitudes
+        if solicitudes_emp.size() == 0:
+            print("No tienes ninguna solicitud registrada.")
+            return
+        
+        solicitudes_Emp = []  # Lista para almacenar el estado de solicitudes
+        current = solicitudes_emp.first()  # Iniciar desde el primer nodo
+        
+        while current is not None:  # Iterar sobre las solicitudes
+            soli = current.get_Data()
+            # Mostrar el estado de la solicitud
+            print(f"Estado de su solicitud del tipo ({soli.get_tipo()}): {soli.get_equipo()} ==> {soli.get_estado()}")
+            # Agregar la información al archivo
+            solicitudes_Emp.append(f"Tipo: {soli.get_tipo()}, Equipo: {soli.get_equipo()}, Estado: {soli.get_estado()}")
+            current = current.get_Next()  # Avanzar al siguiente nodo
+        
+        # Guardar las solicitudes en un archivo
+        from Clases.solicitud import Solicitud  # Importar la clase Solicitud
+        Solicitud.toFile(solicitudes_Emp, "Estado_Solicitudes.txt")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         

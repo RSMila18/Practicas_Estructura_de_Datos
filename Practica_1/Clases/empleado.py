@@ -63,29 +63,35 @@ class Empleado(Usuario):
         
     @classmethod
     def eliminar(cls, Objeto):
-        if Objeto is Empleado.empleados.first():
-            return Empleado.empleados.remove_first()
-        elif Objeto is Empleado.empleados.last():
-            return Empleado.empleados.remove_last()
-        else:
-            found = False
-            temp = Empleado.empleados.first()
-            while found == False:
-                if temp.get_Data() == Objeto:
-                    eliminar = temp
-                    anterior = temp.get_Prev()
-                    siguiente = temp.get_Next()
+        temp = cls.empleados.first()
+
+        if temp is None:  # Si la lista está vacía
+            return False
+
+        if Objeto == temp.get_Data():  # Si el objeto es el primer nodo
+            return cls.empleados.remove_first()
+
+        while temp is not None:
+            if temp.get_Data() == Objeto:  # Encuentra el nodo a eliminar
+                anterior = temp.get_Prev()
+                siguiente = temp.get_Next()
+
+                if siguiente is None:  # Si es el último nodo
+                    anterior.set_Next(None)
+                else:  # Si no es el último nodo
                     anterior.set_Next(siguiente)
                     siguiente.set_Prev(anterior)
-                    temp.set_Prev(None)
-                    temp.set_Next(None)
-                    found = True
-                    print(eliminar.get_Data())
-                    return True
-                else:
-                    temp = temp.get_Next()
+
+                temp.set_Prev(None)
+                temp.set_Next(None)
+                print(f"Nodo eliminado: {temp.get_Data()}")
+                return True
+
+            temp = temp.get_Next()
+
+        print("Objeto no encontrado en la lista.")
         return False
-        
+            
 
     def toFile(empleados, filename='Empleados.txt'):
         current_dir = os.path.dirname(os.path.abspath(__file__))

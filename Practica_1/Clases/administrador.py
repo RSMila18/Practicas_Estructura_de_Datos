@@ -73,7 +73,8 @@ class Administrador(Empleado):
         current = super().empleados.first()
         while current is not None:
             empleado = current.get_Data()
-            if empleado.identificacion == identificacion:
+            #if empleado.identificacion == identificacion:
+            if empleado.get_id() == int(identificacion):
                 nueva_contraseña = input("Ingrese la nueva contraseña: ")
                 empleado.set_password(nueva_contraseña)  
                 print("Contraseña actualizada exitosamente.")

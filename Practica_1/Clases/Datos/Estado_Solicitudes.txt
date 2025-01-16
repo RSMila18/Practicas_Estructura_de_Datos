@@ -1,0 +1,2 @@
+Tipo: Agregar, Equipo: Tatiana-Ramirez 2345934 MONITOR_JANUS_21 50245333 23 10 2022 600000, Estado: Pendiente
+Tipo: Agregar, Equipo: Tatiana-Ramirez 2345934 CPURYZEN_6T_4GB 50246341 23 10 2022 1590000, Estado: Pendiente
