@@ -65,21 +65,18 @@ class Sistema:
                 print("2. Solicitar agregar equipo")
                 print("3. Solicitar eliminar equipo")
                 print("4. Consultar estado de solicitudes")
-                print("5. Generar reporte de inventario y solicitudes")
-                print("6. Salir")
+                print("5. Salir")
 
                 opcion = input("Seleccione una opción: ")
                 if opcion == "1":
-                    self.consultar_inventario(empleado)
+                    Investigador.consultar_inventario(empleado)
                 elif opcion == "2":
-                    self.solicitar_agregar_equipo(empleado)
+                    Investigador.solicitar_agregar_equipo(empleado)
                 elif opcion == "3":
-                    self.solicitar_eliminar_equipo(empleado)
+                    Investigador.solicitar_eliminar_equipo(empleado)
                 elif opcion == "4":
-                    self.consultar_solicitudes(empleado)
+                    Investigador.consultar_estado_solicitudes(empleado)
                 elif opcion == "5":
-                    self.generar_reporte_investigador(empleado)
-                elif opcion == "6":
                     print("Sesión cerrada")
                     break
                 else:

@@ -36,7 +36,7 @@ class Empleado(Usuario):
         return self.Data
 
     def __str__(self):
-        return f'{self._nombre} {self._id} {self._fecha_nacimiento.get_dia()} {self._fecha_nacimiento.get_mes()} {self._fecha_nacimiento.get_A()} {self._ciudad_nacimiento} {self._tel} {self._email} {self._dir.get_calle()} {self._dir.get_nomenclatura()} {self._dir.get_barrio()} {self._dir.get_ciudad()} {self._dir.get_edificio()} {self._dir.get_apto()} {self._password} {self._descripcion}'
+        return f'{self._nombre} {self._id} {self._fecha_nacimiento.get_dia()} {self._fecha_nacimiento.get_mes()} {self._fecha_nacimiento.get_A()} {self._ciudad_nacimiento} {self._tel} {self._email} {self._dir.get_calle()} {self._dir.get_nomenclatura()} {self._dir.get_barrio()} {self._dir.get_ciudad()} {self._dir.get_edificio()} {self._dir.get_apto()}'
     
     @classmethod
     def buscar(cls, identificacion):
@@ -57,6 +57,31 @@ class Empleado(Usuario):
         else:
             Empleado.empleados.add_last(e)
             return True
+        
+    @classmethod
+    def eliminar(cls, Objeto):
+        if Objeto is Empleado.empleados.first():
+            return Empleado.empleados.remove_first()
+        elif Objeto is Empleado.empleados.last():
+            return Empleado.empleados.remove_last()
+        else:
+            found = False
+            temp = Empleado.empleados.first()
+            while found == False:
+                if temp.get_Data() == Objeto:
+                    eliminar = temp
+                    anterior = temp.get_Prev()
+                    siguiente = temp.get_Next()
+                    anterior.set_Next(siguiente)
+                    siguiente.set_Prev(anterior)
+                    temp.set_Prev(None)
+                    temp.set_Next(None)
+                    found = True
+                    print(eliminar.get_Data())
+                    return True
+                else:
+                    temp = temp.get_Next()
+        return False
         
 
     def toFile(empleados, filename='Empleados.txt'):
@@ -81,7 +106,7 @@ class Empleado(Usuario):
                 new_direccion = Direccion(new_linea[8], new_linea[9], new_linea[10], new_linea[11], new_linea[12], new_linea[13])
                 new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[5], int(new_linea[6]), new_linea[7], new_direccion)
                 Empleado.agregar(new_employees)
-                print(f"Empleado: {new_employees} \n")
+                #print(f"Empleado: {new_employees} \n")
             archivo.close()
 
     @staticmethod
@@ -96,7 +121,7 @@ class Empleado(Usuario):
                 if employee != None:
                     employee.set_password(new_linea[1])
                     employee.set_descripcion(new_linea[2])
-                    print(f"ID: {employee.get_id()} Contraseña: {employee.get_password()} Descripción: {employee.get_descripcion()} \n")
+                    #print(f"ID: {employee.get_id()} Contraseña: {employee.get_password()} Descripción: {employee.get_descripcion()} \n")
                 else:
                     print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro \n")
             archivo.close()
@@ -118,16 +143,22 @@ class Empleado(Usuario):
                 else:
                     print(f"Inventario del empleado: {user.get_nombre()}")
                     L = user.get_inventario()
-                    current = L.first()
-                    for _ in range(L.size(),1):
-                        print(current.get_Data())
-                        current = current.get_Next() 
+                    if L.is_Empty():
+                        print("El inventario del empleado se encuentra vacio.")
+                    else:
+                        current = L.first()
+                        for _ in range(L.size(),1):
+                            print(current.get_Data())
+                            current = current.get_Next() 
             else:
                 print("Opción no válida.")
 
         if e.get_descripcion() == "investigador":
             D = e.get_inventario()
-            current = D.first()
-            for _ in range(L.size(),1):
-                print(current.get_Data())
-                current = current.get_Next() 
+            if D.is_Empty():
+                print("El inventario del empleado se encuentra vacio.")
+            else:
+                current = D.first()
+                for _ in range(L.size(),1):
+                    print(current.get_Data())
+                    current = current.get_Next() 

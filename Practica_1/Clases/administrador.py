@@ -47,17 +47,14 @@ class Administrador(Empleado):
     @classmethod
     def eliminar_usuario(cls,  identificacion):
         print(f"Intentando eliminar el usuario con ID: {identificacion}")
-        nodo = cls.buscar(identificacion)
+        identificacion = int(identificacion)
+        nodo = Empleado.buscar(identificacion) #nodo = Empleado | -1(Int)
         found = False
-        while nodo is not None:
-            empleado = current.get_Data()
+
+        if nodo is not None and nodo is not -1:
             print(f"Verificando empleado: {nodo.get_id()}")
-            if empleado.get_id() ==  identificacion: 
-                Empleado.empleados.remove(nodo)
-                #self.eliminar_de_lista(super().empleados, current) 
-                found = True
-                break
-            current = current.get_Next()
+            if nodo.get_id() ==  identificacion: 
+                found = Empleado.eliminar(nodo)
         if found:
             print("Usuario eliminado exitosamente.")
             empleados_actua = []
