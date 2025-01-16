@@ -1,9 +1,10 @@
+import os
 from Clases.equipo import Equipo
 from Clases.usuario import Usuario
 from Listas.doble_list import DoubleList
 from Clases.fecha import Fecha
 from Clases.direccion import Direccion
-import os
+
 
 class Empleado(Usuario):
 
@@ -40,7 +41,8 @@ class Empleado(Usuario):
         if Empleado.empleados.is_Empty():
             return None
         current = Empleado.empleados.first()
-        for _ in range(Empleado.empleados.size(),1):
+        for _ in range(Empleado.empleados.size()):
+            
             if identificacion == current.get_Data().get_id():
                 return current.get_Data()
             else:
@@ -56,7 +58,8 @@ class Empleado(Usuario):
         
 
     def toFile(filename='Empleados.txt'):
-        full_path = "Datos/" + filename 
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", filename)
         with open(full_path, "w", encoding="utf-8") as archivo:
             employees = []
             current = Empleado.empleados.first()
@@ -68,35 +71,38 @@ class Empleado(Usuario):
                 archivo.write(str(empleado) + "\n")
             archivo.close()
 
-    
+    @staticmethod
     def import_empleados(filename="Empleados.txt"):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ruta = os.path.join(current_dir, "Datos", filename)
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
-                linea = linea.strip()  # Eliminar saltos de línea o espacios extra
+                linea = linea.strip()  
                 new_linea = linea.split(" ")
-                #Juan-Perez 24567898 12 10 1980 Medellin 3003233234 juanperez@edl.edu.co kr74 4T-35 Boston Medellin null null
                 new_fecha = Fecha(new_linea[2], new_linea[3], new_linea[4])
                 new_direccion = Direccion(new_linea[8], new_linea[9], new_linea[10], new_linea[11], new_linea[12], new_linea[13])
                 new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[5], int(new_linea[6]), new_linea[7], new_direccion)
                 Empleado.agregar(new_employees)
+                print(f"Empleado: {new_employees}")
             archivo.close()
-    
+
+    @staticmethod
     def import_password(filename="Password.txt"):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ruta = os.path.join(current_dir, "Datos", filename)
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
-                linea = linea.strip()  # Eliminar saltos de línea o espacios extra
+                linea = linea.strip()  
                 new_linea = linea.split(" ")
-                employee = Empleado.buscar(new_linea[0])
+                employee = Empleado.buscar(int(new_linea[0]))
                 if employee != None:
                     employee.set_password(new_linea[1])
                     employee.set_descripcion(new_linea[2])
+                    print(f"ID: {employee.get_id()} Contraseña: {employee.get_password()} Descripción: {employee.get_descripcion()}")
                 else:
                     print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro")
             archivo.close()
+                    
     
     def consultar_inventario(e):
         if e.get_descripcion() == "administrador":

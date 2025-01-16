@@ -1,12 +1,13 @@
 from Clases.administrador import Administrador
 from Clases.investigador import Investigador
+from Clases.empleado import Empleado
 class Sistema:    
 
     def ingresar_sistema():
-        Administrador.import_empleados()
-        Investigador.import_password()
+        #Empleado.import_empleados()
+        #Empleado.import_password()
 
-        print("Bienvenid@, por favor, a continuación ingrese sus credenciales para accder al sistema.\n")
+        print("Bienvenid@, por favor, a continuación ingrese sus credenciales para acceder al sistema.\n")
         while True:
             id_ = input("Ingrese su número de identificación(cédula): ")
             password = input("Ingrese su contraseña: ")
