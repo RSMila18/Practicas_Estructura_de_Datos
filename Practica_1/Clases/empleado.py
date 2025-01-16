@@ -83,7 +83,7 @@ class Empleado(Usuario):
                 new_direccion = Direccion(new_linea[8], new_linea[9], new_linea[10], new_linea[11], new_linea[12], new_linea[13])
                 new_employees = Empleado(new_linea[0], int(new_linea[1]), new_fecha, new_linea[5], int(new_linea[6]), new_linea[7], new_direccion)
                 Empleado.agregar(new_employees)
-                print(f"Empleado: {new_employees}")
+                print(f"Empleado: {new_employees} \n")
             archivo.close()
 
     @staticmethod
@@ -98,9 +98,9 @@ class Empleado(Usuario):
                 if employee != None:
                     employee.set_password(new_linea[1])
                     employee.set_descripcion(new_linea[2])
-                    print(f"ID: {employee.get_id()} Contraseña: {employee.get_password()} Descripción: {employee.get_descripcion()}")
+                    print(f"ID: {employee.get_id()} Contraseña: {employee.get_password()} Descripción: {employee.get_descripcion()} \n")
                 else:
-                    print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro")
+                    print(f"El empleado de cedula: {new_linea[0]}, no se encuentra en el registro \n")
             archivo.close()
                     
     

@@ -2,23 +2,21 @@ from Clases.administrador import Administrador
 from Clases.investigador import Investigador
 from Clases.empleado import Empleado
 class Sistema:    
-
+    
     def ingresar_sistema():
-        #Empleado.import_empleados()
-        #Empleado.import_password()
 
         print("Bienvenid@, por favor, a continuación ingrese sus credenciales para acceder al sistema.\n")
         while True:
-            id_ = input("Ingrese su número de identificación(cédula): ")
+            id_ = int(input("Ingrese su número de identificación(cédula): "))
             password = input("Ingrese su contraseña: ")
 
-            empleado = Administrador.buscar(id_)
-            if empleado != -1 and empleado.get_password() == password:
+            empleado = Empleado.buscar(id_)
+            if empleado is not None and empleado.get_password() == password:
                     Sistema.menu(empleado)
                     break
             else:
                 print("Identificación y/o contraseña incorrecta.")
-
+    @classmethod
     def menu(self, empleado):
         if empleado.get_descripcion() == "administrador":
 
