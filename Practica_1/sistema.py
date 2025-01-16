@@ -36,7 +36,7 @@ class Sistema:
                 elif opcion == "2":
                     ident = input("Ingrese la identificación(cédula) del empleado que desea buscar: ")
                     Administrador.buscar(ident)
-                    if empleado is not None:
+                    if empleado is not None and ident.isdigit():
                         print(empleado)
                     else:
                         print("Empleado no encontrado.")
