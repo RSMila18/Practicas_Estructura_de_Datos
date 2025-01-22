@@ -44,7 +44,7 @@ class Inventario(Equipo):
                 return True
     
     def buscar(placa):
-        super().buscar()
+        return Equipo.buscar(placa)
 
     def ordenar_por_placa(self):
 
