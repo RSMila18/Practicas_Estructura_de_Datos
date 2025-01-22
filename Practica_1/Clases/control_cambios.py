@@ -7,16 +7,21 @@ class ControlCambios:
 
     registro_cambios = List()
 
-    def __init__(self, id_empleado = None, numero_placa = None, tipo_cambio = None):
+    def __init__(self, id_empleado = None, numero_placa = None, tipo_cambio = None, razon = None):
         self._id_empleado = id_empleado
         self._numero_placa = numero_placa
         self._tipo_cambio = tipo_cambio
         fecha_actual = Fecha(datetime.now().day, datetime.now().month, datetime.now().year) 
         self._fecha = fecha_actual
         self._hora = datetime.now()
+        self._razon = razon
     
     def get_list():
         return ControlCambios.registrar_cambio
+    def get_razon(self):
+        return self._razon
+    def set_razon(self, razon):
+        self._razon = razon
     def get_id_empleado(self):
         return self._id_empleado
     def set_id_empleado(self, ide):
@@ -37,7 +42,7 @@ class ControlCambios:
         return self._hora    
     def __str__(self):
     
-        return f'{self._id_empleado} {self._numero_placa} {self._tipo_cambio} {self._fecha.get_dia()} {self._fecha.get_mes()} {self._fecha.get_A()} {self._hora}'
+        return f'{self._id_empleado} {self._numero_placa} {self._tipo_cambio} {self._fecha.get_dia()} {self._fecha.get_mes()} {self._fecha.get_A()} {self._hora} {self._razon}'
 
     def toFile(changes, filename='Control_de_cambios.txt'):
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -48,9 +53,9 @@ class ControlCambios:
                 archivo.write(str(cambios) + "\n")
             archivo.close()
 
-    def registrar_cambio(id_empleado, numero_placa, tipo_cambio):
+    def registrar_cambio(id_empleado, numero_placa, tipo_cambio, razon):
         
-        cambio = ControlCambios(id_empleado, numero_placa, tipo_cambio)
+        cambio = ControlCambios(id_empleado, numero_placa, tipo_cambio, razon)
         ControlCambios.registro_cambios.add_Last(cambio)
         print(f"El Cambio ha sido registrado: {cambio}")
         
@@ -69,10 +74,10 @@ class ControlCambios:
             for linea in archivo:
                 linea = linea.strip()  
                 new_linea = linea.split(" ")
-                #34568910 50109774 Editar 16 1 2025 2025-01-16 14:54:37.019185
+                #34568910 50109774 Editar 16 1 2025 2025-01-16 14:54:37.019185 8
                 #0          1       2       345       6          7
                 S = ControlCambios.get_list()
-                N = ControlCambios(new_linea[0], new_linea[1], new_linea[2])
+                N = ControlCambios(new_linea[0], new_linea[1], new_linea[2], new_linea[8])
                 F = new_linea[6].split("-")
                 N.set_fecha(Fecha(F[0],F[1],F[2]))
                 #print(f"Empleado: {new_employees} \n")

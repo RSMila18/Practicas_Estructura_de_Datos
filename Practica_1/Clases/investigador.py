@@ -55,6 +55,9 @@ class Investigador(Empleado):
    
     @classmethod
     def consultar_estado_solicitudes(cls, empleado):
+
+        
+        file = Solicitud.get_file()
         # Obtener las solicitudes del empleado
         solicitudes_emp = empleado.get_solicitudes()
         
@@ -64,15 +67,23 @@ class Investigador(Empleado):
             return
         
         solicitudes_Emp = []  # Lista para almacenar el estado de solicitudes
+        temp = file.first()
+        a = temp
         current = solicitudes_emp.first()  # Iniciar desde el primer nodo
         
         while current is not None:  # Iterar sobre las solicitudes
-            soli = current.get_Data()
-            # Mostrar el estado de la solicitud
-            print(f"Estado de su solicitud del tipo ({soli.get_tipo()}): {soli.get_equipo()} ==> {soli.get_estado()}")
-            # Agregar la información al archivo
-            solicitudes_Emp.append(f"Tipo: {soli.get_tipo()}, Equipo: {soli.get_equipo()}, Estado: {soli.get_estado()}")
-            current = current.get_Next()  # Avanzar al siguiente nodo
+            for i in range(file.size()):
+                if current.get_Data().get_equipo().get_numero_placa() == a.get_Data().get_equipo().get_numero_placa():
+                    soli = a
+                else:
+                    a = temp.get_Next() 
+                if soli != a:
+                    soli = current.get_Data()
+                # Mostrar el estado de la solicitud
+                print(f"Estado de su solicitud del tipo ({soli.get_tipo()}): {soli.get_equipo()} ==> {soli.get_estado()}")
+                # Agregar la información al archivo
+                solicitudes_Emp.append(f"Tipo: {soli.get_tipo()}, Equipo: {soli.get_equipo()}, Estado: {soli.get_estado()}")
+                current = current.get_Next()  # Avanzar al siguiente nodo
         
         # Guardar las solicitudes en un archivo
         from Clases.solicitud import Solicitud  # Importar la clase Solicitud

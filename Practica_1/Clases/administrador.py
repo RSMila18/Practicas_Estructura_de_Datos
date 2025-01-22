@@ -141,38 +141,40 @@ class Administrador(Empleado):
             emp = solicitud.get_empleado()
             if decision == 1:
                 if solicitud.get_tipo() == "Agregar":
-                    if eq != -1:
-                        eq.set_empleado(emp)
-                        solicitud.aprobar_solicitud()
-                        emp.agregar_inventario(eq)
-                        print("Solicitud Aprobada con exito.")
-                        solicitud.get_cambios()
-                        ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo())
-                    else:
-                        print("El numero de placa no existe.")
-                        continue
-                elif solicitud.get_tipo() == "Editar":
-                    if eq != -1:
+                    from Clases.equipo import Equipo
+                    if Equipo.buscar(int(eq.get_numero_placa())) != None:
                         if eq.get_empleado().get_nombre() != solicitud.get_empleado().get_nombre():
                             print("No se puede Aprobar esta solicitud porque el equipo esta asociado a otro empleado.")
                             continue
                         else:
-                            temp = emp.get_inventario().first()
+                            eq.set_empleado(emp)
+                            solicitud.aprobar_solicitud()
+                            
+                            emp.agregar_inventario(eq)
+                            print("Solicitud Aprobada con exito.")
+                            solicitud.get_cambios()
+                            ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "aprobada")
+                    else:
+                        print("El numero de placa no existe.")
+                        continue
+                elif solicitud.get_tipo() == "Editar":
+                    if Equipo.buscar(int(eq.get_numero_placa())) != None:
+                        if eq.get_empleado().get_nombre() != solicitud.get_empleado().get_nombre():
+                            print("No se puede Aprobar esta solicitud porque el equipo esta asociado a otro empleado.")
+                            continue
+                        else:
+                            temp = emp.get_inventario().first() #primer equipo inventario
                             
                             while temp is not None:
                                 if temp.get_Data() == eq:
-                                    if temp == emp.get_inventario().first():
-                                        emp.get_inventario().remove_first()
-                                    elif temp == emp.get_inventario().last():
-                                        emp.get_inventario().remove_Last()
-                                    else:
-                                        Nodo = temp
-                                        break
-                            #emp.get_inventario().remove(Nodo)
-                            eq.set_empleado(None) 
+                                    emp.get_inventario().remove(temp)
+                                    eq.set_empleado(None)
+                                    break
+                                temp = temp.get_Next()
+                             
                             solicitud.aprobar_solicitud()
                             solicitud.get_cambios()
-                            ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo())
+                            ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "aprobada")
                             print("Solicitud Aprobada con exito.")
                     else:
                         print("El numero de placa no existe.")
@@ -185,7 +187,7 @@ class Administrador(Empleado):
             elif decision == 2:
                 solicitud.rechazar_solicitud()
                 solicitud.get_cambios()
-                ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo())
+                ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "rechazado")
                 
                 #(self, id_empleado = None, numero_placa = None, tipo_cambio = None)
                 print("Solicitud Rechazada con exito.")
@@ -205,8 +207,6 @@ class Administrador(Empleado):
             if solicitud.get_estado() != "Pendiente":
                 self.eliminar_de_lista(Solicitud.solicitudes, current)
             current = siguiente
-        
-
 
         solicitudes_data = []
         current = solicitudes_agregar.first()

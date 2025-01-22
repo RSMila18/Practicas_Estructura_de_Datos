@@ -60,7 +60,8 @@ class Equipo:
             new_employees = e.get_empleado()
             new_employees.agregar_inventario(e)
             Equipo.equipos.add_last(e)
-            print("El equipo ha sido agregado con exito")
+            Equipo.toFile()
+            #print("El equipo ha sido agregado con exito")
             return True
 
     def toFile(filename='InventarioGeneral.txt'):

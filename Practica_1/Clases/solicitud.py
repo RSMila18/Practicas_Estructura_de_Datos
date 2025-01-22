@@ -7,6 +7,7 @@ class Solicitud:
 
     solicitudes = List()
     cambios_solicitudes = List()
+    file = List()
 
     def __init__(self, empleado = None, tipo = None, equipo = None):
         self._empleado = empleado #Empleado
@@ -14,6 +15,9 @@ class Solicitud:
         self._estado = "Pendiente"
         self._equipo = equipo
         self._justificacion = " "
+
+    def get_file(self):
+        return Solicitud.file
     
     def get_cambios(self):
         Solicitud.cambios_solicitudes.add_Last(self)
@@ -40,8 +44,10 @@ class Solicitud:
         return Solicitud.solicitudes
     def aprobar_solicitud(self):
         self._estado = "aprobada"
+        Solicitud.toFile_1(self)
     def rechazar_solicitud(self):
         self._estado = "rechazada"
+        Solicitud.toFile_1(self)
 
     def buscar_solicitud(type_):
         D = Solicitud.solicitudes
@@ -69,8 +75,39 @@ class Solicitud:
             current = Solicitud.cambios_solicitudes.first()
             while current is not None:
                 soli = current.get_Data()
-                archivo.write(str(soli) + " " + str(soli.get_estado()) + "\n") 
+                archivo.write(str(soli) + " "+ str(soli.get_tipo()) + str(soli.get_estado()) + "\n") 
                 current = current.get_Next()
+
+    def import_cambios(filename='Solicitudes.txt'):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ruta = os.path.join(current_dir, "Datos", filename)
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                linea = linea.strip()
+                new_linea = linea.split(" ")
+                new_product = Equipo.buscar(int(new_linea[3]))
+                new_employee = Empleado.buscar(int(new_linea[1]))
+                tipo = new_linea[8]
+                nueva = Solicitud(new_employee, tipo ,new_product)
+                if new_linea[9] == "aprobada":
+                    nueva.aprobar_solicitud()
+                else:
+                    nueva.rechazar_solicitud()
+                Solicitud.file.add_Last(nueva)
+                #Diego-Palacio 34568910 CAMARA_MONOCROMATICA 50109774 9 12 2021 786000 tipo aprobada
+                #   0              1            2               3     4  5   6      7    8    9
+                #def __init__(self, empleado = None, tipo = None, equipo = None)
+
+            archivo.close()
+    
+    def toFile_1(solicitud, filename='Solicitudes.txt'):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", filename)
+        #full_path = "Datos/" + filename 
+        with open(full_path, "w", encoding="utf-8") as archivo:
+
+            archivo.write(str(solicitud) + "\n")
+            archivo.close()
     
     def toFile(requests, filename='Solicitudes.txt'):
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -99,13 +136,7 @@ class Solicitud:
                         f = Fecha(new_linea[3],new_linea[4],new_linea[5])
                         s = Equipo(new_linea[1],new_linea[2],f,new_linea[6],employee)   
                         product = s
-                        Equipo.equipos.add_last(product)
-                        D = []
-                        current = Equipo.equipos.first()
-                        for _ in range(Equipo.equipos.size()):
-                                D.append(current.get_Data())
-                                current = current.get_Next()
-                        Equipo.toFile(D)
+                        Equipo.agregar(product)
 
                 elif len(new_linea) < 7:
                     employee = None
@@ -122,13 +153,7 @@ class Solicitud:
                         f = Fecha(new_linea[4],new_linea[5],new_linea[6])
                         s = Equipo(new_linea[2],new_linea[3],f,new_linea[7],employee)   
                         product = s
-                        Equipo.equipos.add_last(product)
-                        L = []
-                        current = Equipo.equipos.first()
-                        for _ in range(Equipo.equipos.size()):
-                                L.append(current.get_Data())
-                                current = current.get_Next()
-                        Equipo.toFile(L)
+                        Equipo.agregar(product)
 
                 new_requests = Solicitud(employee, type_, product)
                 if employee != None:
