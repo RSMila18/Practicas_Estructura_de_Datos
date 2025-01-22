@@ -43,7 +43,7 @@ class Inventario(Equipo):
                 print(f"Equipo eliminado")
                 return True
     
-    def buscar(self, placa):
+    def buscar(placa):
         super().buscar()
 
     def ordenar_por_placa(self):
