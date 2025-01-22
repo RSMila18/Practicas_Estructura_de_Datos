@@ -27,7 +27,7 @@ class Sistema:
                 print("3. Eliminar usuario")
                 print("4. Cambiar contraseña")
                 print("5. Responder solicitudes")
-                print("6. Consultar inventario de un usuario")
+                print("6. Consultar inventario")
                 print("7. Salir")
 
                 opcion = input("Seleccione una opción: ")
