@@ -35,17 +35,35 @@ class Equipo:
     def set_empleado(self, empleado):
         self._empleado = empleado
     def __str__(self):
-        return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {self._nombre} {self._numero_placa} {self._fecha_compra.get_dia()} {self._fecha_compra.get_mes()} {self._fecha_compra.get_A()} {self._valor_compra}'
+        if self.get_empleado == None:
+            return f'{None} {None} {self._nombre} {self._numero_placa} {self._fecha_compra.get_dia()} {self._fecha_compra.get_mes()} {self._fecha_compra.get_A()} {self._valor_compra}'
+
+
+        else:
+            return f'{self._empleado.get_nombre()} {self._empleado.get_id()} {self._nombre} {self._numero_placa} {self._fecha_compra.get_dia()} {self._fecha_compra.get_mes()} {self._fecha_compra.get_A()} {self._valor_compra}'
 
     def buscar(placa):
+        a = None
         current = Equipo.equipos.first()
         for _ in range(Equipo.equipos.size()):
             if int(placa) == current.get_Data().get_numero_placa():
-                return current.get_Data()
+                a = current.get_Data()
+                return a
             else:
                 current = current.get_Next()
 
-    def toFile(empleados, filename='InventarioGeneral.txt'):
+    def agregar(e):
+        if Equipo.equipos.is_Empty() == False and Equipo.buscar(e.get_numero_placa()) != None:
+                print("El equipo ya existe")
+                return False
+        else:
+            new_employees = e.get_empleado()
+            new_employees.agregar_inventario(e)
+            Equipo.equipos.add_last(e)
+            print("El equipo ha sido agregado con exito")
+            return True
+
+    def toFile(filename='InventarioGeneral.txt'):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         full_path = os.path.join(current_dir, "Datos", filename)
         with open(full_path, "w", encoding="utf-8") as archivo:
@@ -70,8 +88,7 @@ class Equipo:
                 new_employees = Empleado.buscar(int(new_linea[1]))
                 new_fecha = Fecha(new_linea[4], new_linea[5], new_linea[6])
                 new_product = Equipo(new_linea[2], int(new_linea[3]), new_fecha, int(new_linea[7]), new_employees)
-                new_employees.agregar_inventario(new_product)
-                Equipo.equipos.add_last(new_product)
+                Equipo.agregar(new_product)
                 #print(f"{new_product}")
             archivo.close()
     
