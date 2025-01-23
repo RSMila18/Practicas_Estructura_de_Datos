@@ -54,7 +54,7 @@ class Equipo:
 
     def agregar(e):
         if Equipo.equipos.is_Empty() == False and Equipo.buscar(e.get_numero_placa()) != None:
-                print("El equipo ya existe")
+                #print("El equipo ya existe")
                 return False
         else:
             new_employees = e.get_empleado()

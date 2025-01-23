@@ -55,38 +55,14 @@ class Investigador(Empleado):
    
     @classmethod
     def consultar_estado_solicitudes(cls, empleado):
-    
-        file = Solicitud.get_file()
-        # Obtener las solicitudes del empleado
-        solicitudes_emp = empleado.get_solicitudes()
+        from Clases.control_cambios import ControlCambios
+        L = ControlCambios.buscar_por_id(int(empleado.get_id()))
         
-        # Verificar si el empleado tiene solicitudes
-        if solicitudes_emp.size() == 0:
-            print("No tienes ninguna solicitud registrada.")
-            return
-        
-        solicitudes_Emp = []  # Lista para almacenar el estado de solicitudes
-        temp = file.first()
-        a = temp
-        current = solicitudes_emp.first()  # Iniciar desde el primer nodo
-        
-        while current is not None:  # Iterar sobre las solicitudes
-            for i in range(file.size()):
-                if current.get_Data().get_equipo().get_numero_placa() == a.get_Data().get_equipo().get_numero_placa():
-                    soli = a
-                else:
-                    a = temp.get_Next() 
-                if soli != a:
-                    soli = current.get_Data()
-                # Mostrar el estado de la solicitud
-                print(f"Estado de su solicitud del tipo ({soli.get_tipo()}): {soli.get_equipo()} ==> {soli.get_estado()}")
-                # Agregar la información al archivo
-                solicitudes_Emp.append(f"Tipo: {soli.get_tipo()}, Equipo: {soli.get_equipo()}, Estado: {soli.get_estado()}")
-                current = current.get_Next()  # Avanzar al siguiente nodo
-        
-        # Guardar las solicitudes en un archivo
-        from Clases.solicitud import Solicitud  # Importar la clase Solicitud
-        Solicitud.toFile(solicitudes_Emp, "Estado_Solicitudes.txt")
+        for linea in L:
+                cambio = linea.split(" ")
+                #34568910 50109773 Editar 22 1 2025 2025-01-22 12:49:25.158712 rechazado
+                #   0         1       2   3   4 5       6               7          8
+                print(f"Estado de su solicitud del tipo ({cambio[2]}), asociado al equipo con numero de placa: {cambio[1]} fue ==> {cambio[8]}")
 
 
         

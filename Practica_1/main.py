@@ -13,10 +13,9 @@ if __name__ == "__main__":
     Empleado.import_empleados()
     Empleado.import_password()
     Equipo.import_equipos()
-    #Solicitud.import_cambios()
     Solicitud.import_solicitud("Agregar", "Solicitudes_agregar.txt")
     Solicitud.import_solicitud("Editar", "Solicitudes_editar.txt")
-    #ControlCambios.import_control()
+    ControlCambios.import_control()
 
 
     inicio = Sistema.ingresar_sistema()

@@ -67,18 +67,98 @@ class ControlCambios:
         ControlCambios.toFile(cambios_data)
         print(f"Los cambios han sido guardados con exito")
 
-    def import_control(filename="Control_de_cambios.txt"):
+    def import_control():
+        from Clases.empleado import Empleado
+        from Clases.equipo import Equipo
+        try:
+            # Obtener la ruta completa del archivo
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            full_path = os.path.join(current_dir, "Datos", "Control_de_cambios.txt")
+            
+            # Abre el archivo en modo lectura usando la ruta completa
+            with open(full_path, "r") as archivo:
+                for linea in archivo:
+                    # Limpia y divide la línea en sus componentes
+                    linea = linea.strip()
+                    datos = linea.split(" ")  # Separar por espacios
+                    #2345934 50245333 Agregar 22 1 2025 2025-01-22 22:21:15.612433 aprobada
+                    #    0        1       2       345       6             7         8
+                    empleado_id = int(datos[0])
+                    numero_placa = int(datos[1])
+                    tipo_cambio = datos[2]
+                    estado = datos[8]
+
+                    # Validar que el estado sea "Aprobado"
+                    if estado == "aprobada":
+                        # Buscar el equipo usando el método de la clase Equipo
+                        equipo = Equipo.buscar(numero_placa)
+
+                        if not equipo:
+                            print(f"Error: El equipo con placa {numero_placa} no existe.")
+                            continue
+
+                        empleado_asociado = equipo.get_empleado()
+                        empleado_actual_id = empleado_asociado.get_id() if empleado_asociado else None
+
+                        if tipo_cambio == "Agregar":
+                            # Validar que el empleado esté asociado al equipo
+                            if empleado_actual_id != empleado_id:
+                                print(f"Error: El empleado {empleado_id} no está asociado al equipo {numero_placa}.")
+                                E = Empleado.buscar(empleado_id)
+                                E.agregar_inventario(equipo)
+                                #print("Error resuelto.")
+                                continue
+
+                            #print(f"Validación exitosa: El empleado {empleado_id} está asociado al equipo {numero_placa}.")
+
+                        elif tipo_cambio == "Eliminar":
+                            # Verificar si el empleado está asociado al equipo
+                            if empleado_actual_id == empleado_id:
+                                # Eliminar la asociación desde el equipo
+                                equipo.set_empleado(None)
+
+                                # Desasociar también desde el empleado
+                                empleado = Empleado.buscar(empleado_id)
+                                if empleado:
+                                    empleado.eliminar_equipo(equipo)
+
+                                #print(f"Eliminación exitosa: El equipo {numero_placa} ha sido eliminado del inventario de {empleado_id}.")
+                            else:
+                                print(f"Error: El equipo {numero_placa} no está asociado al empleado {empleado_id}.")
+
+                        elif tipo_cambio == "Editar":
+                            # Verificar que el equipo no esté asociado al empleado
+                            if empleado_actual_id == empleado_id:
+                                #print(f"Error: No se puede editar porque el empleado {empleado_id} aún está asociado al equipo {numero_placa}.")
+                                continue
+
+                            #print(f"Validación exitosa: Se puede editar el equipo {numero_placa} para el empleado {empleado_id}.")
+
+                        else:
+                            print(f"Info: Tipo de cambio '{tipo_cambio}' no reconocido. Línea ignorada.")
+                    #else:
+                        #print(f"Info: El cambio no está aprobado. Línea ignorada.")
+
+        except FileNotFoundError:
+            print(f"Error: El archivo 'Control_de_cambios.txt' no se encuentra en la ruta especificada.")
+        except Exception as e:
+            print(f"Error inesperado: {e}")
+    
+    def buscar_por_id(id_empleado, filename="Control_de_cambios.txt"):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ruta = os.path.join(current_dir, "Datos", filename)
-        with open(ruta, "r", encoding="utf-8") as archivo:
-            for linea in archivo:
-                linea = linea.strip()  
-                new_linea = linea.split(" ")
-                #34568910 50109774 Editar 16 1 2025 2025-01-16 14:54:37.019185 8
-                #0          1       2       345       6          7
-                S = ControlCambios.get_list()
-                N = ControlCambios(new_linea[0], new_linea[1], new_linea[2], new_linea[8])
-                F = new_linea[6].split("-")
-                N.set_fecha(Fecha(F[0],F[1],F[2]))
-                #print(f"Empleado: {new_employees} \n")
-            archivo.close()
+        
+        cambios_asociados = []
+        
+        try:
+            with open(ruta, "r", encoding="utf-8") as archivo:
+                for linea in archivo:
+                    linea = linea.strip()  # Remueve saltos de línea y espacios innecesarios
+                    if linea:  # Asegurarse de que no es una línea vacía
+                        partes = linea.split(" ")  # Divide la línea por espacios
+                        if partes[0] == str(id_empleado):  # Compara el ID del empleado
+                            cambios_asociados.append(linea)
+        except FileNotFoundError:
+            print(f"El archivo {filename} no existe.")
+        
+        return cambios_asociados

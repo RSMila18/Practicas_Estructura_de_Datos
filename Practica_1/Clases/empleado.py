@@ -91,6 +91,36 @@ class Empleado(Usuario):
 
         print("Objeto no encontrado en la lista.")
         return False
+    
+    def eliminar_equipo(self, Objeto):
+        temp = self._inventario.first()
+
+        if temp is None:  # Si la lista está vacía
+            return False
+
+        if Objeto == temp.get_Data():  # Si el objeto es el primer nodo
+            return self._inventario.remove_first()
+
+        while temp is not None:
+            if temp.get_Data() == Objeto:  # Encuentra el nodo a eliminar
+                anterior = temp.get_Prev()
+                siguiente = temp.get_Next()
+
+                if siguiente is None:  # Si es el último nodo
+                    anterior.set_Next(None)
+                else:  # Si no es el último nodo
+                    anterior.set_Next(siguiente)
+                    siguiente.set_Prev(anterior)
+
+                temp.set_Prev(None)
+                temp.set_Next(None)
+                print(f"Nodo eliminado: {temp.get_Data()}")
+                return True
+
+            temp = temp.get_Next()
+
+        print("Objeto no encontrado en la lista.")
+        return False
             
 
     def toFile(empleados, filename='Empleados.txt'):
