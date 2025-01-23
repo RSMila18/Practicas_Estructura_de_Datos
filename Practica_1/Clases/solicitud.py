@@ -16,8 +16,14 @@ class Solicitud:
         self._equipo = equipo
         self._justificacion = " "
 
+    @classmethod
     def get_file(self):
         return Solicitud.file
+
+    #@classmethod
+    #def get_file(cls):
+        #return cls.file
+
     
     def get_cambios(self):
         Solicitud.cambios_solicitudes.add_Last(self)

@@ -1,10 +1,12 @@
 from Clases.control_cambios import ControlCambios
+from Clases.equipo import Equipo
 from Clases.empleado import Empleado
 from Clases.fecha import Fecha
 from Listas.doble_node import DoubleNode
 from Clases.solicitud import Solicitud
 from Listas.lista_simple import List
 from Clases.direccion import Direccion
+
 
 class Administrador(Empleado):
 
@@ -141,7 +143,7 @@ class Administrador(Empleado):
             emp = solicitud.get_empleado()
             if decision == 1:
                 if solicitud.get_tipo() == "Agregar":
-                    from Clases.equipo import Equipo
+                    #from Clases.equipo import Equipo
                     if Equipo.buscar(int(eq.get_numero_placa())) != None:
                         if eq.get_empleado().get_nombre() != solicitud.get_empleado().get_nombre():
                             print("No se puede Aprobar esta solicitud porque el equipo esta asociado a otro empleado.")

@@ -55,8 +55,7 @@ class Investigador(Empleado):
    
     @classmethod
     def consultar_estado_solicitudes(cls, empleado):
-
-        
+    
         file = Solicitud.get_file()
         # Obtener las solicitudes del empleado
         solicitudes_emp = empleado.get_solicitudes()
@@ -88,6 +87,9 @@ class Investigador(Empleado):
         # Guardar las solicitudes en un archivo
         from Clases.solicitud import Solicitud  # Importar la clase Solicitud
         Solicitud.toFile(solicitudes_Emp, "Estado_Solicitudes.txt")
+
+
+        
 
     def descarga(e):
         D = e.get_inventario()
