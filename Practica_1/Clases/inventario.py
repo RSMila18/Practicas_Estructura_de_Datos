@@ -7,16 +7,17 @@ class Inventario(Equipo):
 
     def get_inventario(self):
         return super().equipos
+    
     def agregar_equipo(equipo, id_empleado):
         empleado = Empleado.buscar(id_empleado)
-        if empleado == -1:
+        if empleado == None:
             print("El empleado asociado a esta cedula no se encuentra")
             return False    
         current = Equipo.equipos.first()
         while current is not None:
             if current.get_Data().get_numero_placa() == equipo.get_numero_placa():
-                print("Ya Existe un equipo con esta placa")
-                return False
+                equipo.set_empleado(empleado)
+                
             current = current.get_Next()
         equipo.set_empleado(empleado)
         Equipo.equipos.add_last(equipo)
