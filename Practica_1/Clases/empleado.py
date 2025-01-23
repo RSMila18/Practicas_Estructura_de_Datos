@@ -212,5 +212,6 @@ class Empleado(Usuario):
                 print("Este es su inventario:\n")
                 current = D.first()
                 for _ in range(D.size()):
-                    print(current.get_Data())
-                    current = current.get_Next()
+                    if current is not None:
+                        print(current.get_Data())
+                        current = current.get_Next()

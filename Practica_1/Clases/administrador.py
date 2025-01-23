@@ -163,7 +163,7 @@ class Administrador(Empleado):
                         else:
                             emp.eliminar_equipo(eq)
                             eq.set_empleado(None)
-                            Inventario.modificar_empleado_en_archivo(emp.get_id(), eq.get_numero_placa())
+                            Equipo.eliminar(eq)
                             solicitud.aprobar_solicitud()
                             solicitud.get_cambios()
                             ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "aprobada")
