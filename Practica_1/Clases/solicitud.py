@@ -74,6 +74,18 @@ class Solicitud:
             Solicitud.solicitudes.add_Last(s)
             #print("Solicitud agregada con exito")
             
+            
+    def eliminar_solicitud( Objeto):
+        # Suponiendo que 'get_solicitudes()' devuelve una lista simplemente enlazada
+        temp = Solicitud.get_solicitudes().first()  # Empezamos desde el primer nodo de la lista de solicitudes
+
+        if temp is None:  # Si la lista está vacía
+            return False
+
+        # Caso cuando el nodo a eliminar es el primero
+        if Objeto == temp.get_Data():  # Si el objeto coincide con el primer nodo
+            return Solicitud.get_solicitudes().remove_First()  # Eliminamos el primer nodo
+        
     def toFil_(filename='Solicitudes.txt'):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         full_path = os.path.join(current_dir, "Datos", filename)
@@ -110,12 +122,12 @@ class Solicitud:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         full_path = os.path.join(current_dir, "Datos", filename)
         #full_path = "Datos/" + filename 
-        with open(full_path, "w", encoding="utf-8") as archivo:
+        with open(full_path, "a", encoding="utf-8") as archivo:
 
             archivo.write(str(solicitud) + "\n")
             archivo.close()
     
-    def toFile(requests, filename='Solicitudes.txt'):
+    def toFile(requests, filename='Solicitudes.txt', mode='w'):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         full_path = os.path.join(current_dir, "Datos", filename)
         #full_path = "Datos/" + filename 
@@ -129,7 +141,10 @@ class Solicitud:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ruta = os.path.join(current_dir, "Datos", filename)
         with open(ruta, "r", encoding="utf-8") as archivo:
-            for linea in archivo:
+            r = []
+            for renglon in archivo:
+                r.append(renglon)
+            for linea in reversed(r):
                 linea = linea.strip()
                 new_linea = linea.split(" ")
                 #print(new_linea)
@@ -150,7 +165,7 @@ class Solicitud:
                     
                 #Diego-Palacio 34568910 CAMARA_MONOCROMATICA 50109773 9 12 2021 1786000
                 #def __init__(self, empleado = None, tipo = None, equipo = None)
-                else:
+                elif len(new_linea) == 8:
                     employee = Empleado.buscar(int(new_linea[1]))
                     product = Equipo.buscar(int(new_linea[3]))
 

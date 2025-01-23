@@ -188,7 +188,7 @@ class Empleado(Usuario):
             elif opcion == "2":
                 ident = input("Ingrese la identificación(cédula) del empleado al que le desea ver el inventario: ")
                 user = Empleado.buscar(int(ident))
-                if user == -1:
+                if user == None:
                     print("Empleado no encontrado.")
                 else:
                     print(f"Inventario del empleado: {user.get_nombre()}")
@@ -197,9 +197,10 @@ class Empleado(Usuario):
                         print("El inventario del empleado se encuentra vacio.")
                     else:
                         current = L.first()
-                        for _ in range(L.size()):
-                            print(current.get_Data())
-                            current = current.get_Next() 
+                        if current is not None: 
+                            for _ in range(L.size()):
+                                print(current.get_Data())
+                                current = current.get_Next() 
             else:
                 print("Opción no válida.")
 

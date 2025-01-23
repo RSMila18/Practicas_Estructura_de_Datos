@@ -2,10 +2,11 @@ from Clases.control_cambios import ControlCambios
 from Clases.equipo import Equipo
 from Clases.empleado import Empleado
 from Clases.fecha import Fecha
-from Listas.doble_node import DoubleNode
 from Clases.solicitud import Solicitud
 from Listas.lista_simple import List
 from Clases.direccion import Direccion
+from Clases.inventario import Inventario
+import os
 
 
 class Administrador(Empleado):
@@ -136,44 +137,33 @@ class Administrador(Empleado):
             print(f"Valor de Compra: {solicitud.get_equipo().get_valor_compra()}")
             print(f"Justificación: {solicitud.get_justificacion()}")
 
-            decision = input("¿ 1. Aprobar o 2. Rechazar? ")
+            decision = input("¿ 1. Aprobar o 2. Rechazar? (Ingrese el número): ")
             decision = int(decision)
 
             eq = solicitud.get_equipo()
             emp = solicitud.get_empleado()
+            inventario_ = emp.get_inventario()
             if decision == 1:
                 if solicitud.get_tipo() == "Agregar":
-                    #from Clases.equipo import Equipo
-                    if Equipo.buscar(int(eq.get_numero_placa())) != None:
-                        if eq.get_empleado().get_nombre() != solicitud.get_empleado().get_nombre():
-                            print("No se puede Aprobar esta solicitud porque el equipo esta asociado a otro empleado.")
-                            continue
-                        else:
-                            eq.set_empleado(emp)
-                            solicitud.aprobar_solicitud()
-                            
-                            emp.agregar_inventario(eq)
-                            print("Solicitud Aprobada con exito.")
-                            solicitud.get_cambios()
-                            ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "aprobada")
+                    if Inventario.agregar_equipo(eq, emp.get_id()):
+                        solicitud.aprobar_solicitud()
+                        print("Solicitud Aprobada y equipo agregado con exito.")
+                        solicitud.get_cambios()
+                        ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "aprobada")
                     else:
-                        print("El numero de placa no existe.")
+                        print("No se puede Aprobar esta solicitud porque el equipo ya existe.")
+                        current = current.get_Next()
                         continue
+                
                 elif solicitud.get_tipo() == "Editar":
                     if Equipo.buscar(int(eq.get_numero_placa())) != None:
                         if eq.get_empleado().get_nombre() != solicitud.get_empleado().get_nombre():
                             print("No se puede Aprobar esta solicitud porque el equipo esta asociado a otro empleado.")
                             continue
                         else:
-                            temp = emp.get_inventario().first() #primer equipo inventario
-                            
-                            while temp is not None:
-                                if temp.get_Data() == eq:
-                                    emp.get_inventario().remove(temp)
-                                    eq.set_empleado(None)
-                                    break
-                                temp = temp.get_Next()
-                             
+                            emp.eliminar_equipo(eq)
+                            eq.set_empleado(None)
+                            Inventario.modificar_empleado_en_archivo(emp.get_id(), eq.get_numero_placa())
                             solicitud.aprobar_solicitud()
                             solicitud.get_cambios()
                             ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "aprobada")
@@ -181,7 +171,6 @@ class Administrador(Empleado):
                     else:
                         print("El numero de placa no existe.")
                         continue
-                
                 else:
                     print("El tipo de la solicitud es invalido.")
                     continue
@@ -190,21 +179,22 @@ class Administrador(Empleado):
                 solicitud.rechazar_solicitud()
                 solicitud.get_cambios()
                 ControlCambios.registrar_cambio(solicitud.get_empleado().get_id(), solicitud.get_equipo().get_numero_placa(), solicitud.get_tipo(), "rechazado")
-                
-                #(self, id_empleado = None, numero_placa = None, tipo_cambio = None)
                 print("Solicitud Rechazada con exito.")
+
             else:
                 print("Decisión inválida. Saltando a la siguiente solicitud.")
                 current = current.get_Next()
                 continue
             
-            if solicitud.get_estado()== "Pendiente":
-                if solicitud.get_tipo()== "Agregar":
+            if solicitud.get_estado() == "Pendiente":
+                if solicitud.get_tipo() == "Agregar":
                     solicitudes_agregar.add_Last(str(solicitud))
-                elif solicitud.get_tipo()== "Editar":
+                elif solicitud.get_tipo() == "Editar":
                     solicitudes_eliminar.add_Last(str(solicitud))
-                    
-                    
+            
+            # Eliminar la solicitud del archivo Solicitudes.txt si su estado no es Pendiente
+            self.eliminar_solicitud_de_archivo(solicitud)
+
             siguiente = current.get_Next()
             if solicitud.get_estado() != "Pendiente":
                 self.eliminar_de_lista(Solicitud.solicitudes, current)
@@ -214,17 +204,29 @@ class Administrador(Empleado):
         current = solicitudes_agregar.first()
         while current is not None:
             solicitudes_data.append(str(current.get_data()))
-            current= current.get_Next()
-            Solicitud.toFil_()
+            current = current.get_Next()
         Solicitud.toFile(solicitudes_data, "Solicitudes_agregar.txt")
 
-        
         solicitudes_data_eliminar = []
         current = solicitudes_eliminar.first()
         while current is not None:
             solicitudes_data_eliminar.append(str(current.get_data()))
-            current= current.get_Next()
-            Solicitud.toFil_()
-        Solicitud.toFile(solicitudes_data, "Solicitudes_eliminar.txt")
+            current = current.get_Next()
+        Solicitud.toFile(solicitudes_data_eliminar, "Solicitudes_editar.txt")
 
         Solicitud.toFil_()
+
+    @classmethod
+    def eliminar_solicitud_de_archivo(cls, solicitud):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        full_path = os.path.join(current_dir, "Datos", "Solicitudes.txt")
+
+        # Leemos el archivo y eliminamos la línea correspondiente a la solicitud
+        with open(full_path, "r", encoding="utf-8") as archivo:
+            lines = archivo.readlines()
+
+        # Escribimos el archivo de nuevo excluyendo la línea que corresponde a la solicitud eliminada
+        with open(full_path, "w", encoding="utf-8") as archivo:
+            for line in lines:
+                if str(solicitud) not in line:
+                    archivo.write(line)

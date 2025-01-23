@@ -12,7 +12,7 @@ class Equipo:
         self._valor_compra = valor_compra
         self._empleado = empleado
 
-    def get_equipos(self):
+    def get_equipos():
         return Equipo.equipos
     def get_nombre(self):
         return self._nombre
