@@ -6,7 +6,7 @@ class Grafo:
         self.grafo = nx.Graph()
         
     def agregar_arista(self, ciudad_a, ciudad_b, distancia, tiempo):
-        self.grado.add_edge(ciudad_a, ciudad_b, distancia=distancia, tiempo=tiempo)
+        self.grafo.add_edge(ciudad_a, ciudad_b, distancia=distancia, tiempo=tiempo)
         
     def estan_ciudades_conectadas(self, ciudad_a, ciudad_b):
         return self.grafo.has_edge(ciudad_a, ciudad_b)
