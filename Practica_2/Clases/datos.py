@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 
+
 class Datos:
     
     def __init__(self, ruta_archivo):

@@ -9,8 +9,8 @@ class Sistema:
         self.lector.cargar_grafo(self.grafo)
     
     def solicitar_ciudades(self):
-        ciudad_a = input("Ingrese la ciudad de origen: ").strip()
-        ciudad_b = input("Ingrese la ciudad de destino: ").strip()
+        ciudad_a = input("Ingrese la ciudad de origen: ").strip().capitalize()
+        ciudad_b = input("Ingrese la ciudad de destino: ").strip().capitalize()
         return ciudad_a, ciudad_b    
     
     def menu(self):
@@ -25,19 +25,19 @@ class Sistema:
             if opcion == "1":
                 ciudad_a, ciudad_b = self.solicitar_ciudades()
                 if self.grafo.estan_ciudades_conectadas(ciudad_a, ciudad_b):
-                    print(f"{ciudad_a} y {ciudad_b} están conectadas.")
+                    print(f"{ciudad_a} y {ciudad_b} están conectadas. \n")
                 else:
-                    print(f"{ciudad_a} y {ciudad_b} no están conectadas.")
+                    print(f"{ciudad_a} y {ciudad_b} no están conectadas. \n")
                     
             elif opcion == "2":
                 ciudad_a, ciudad_b = self.solicitar_ciudades()
                 camino = self.grafo.camino_mas_corto_distancia(ciudad_a, ciudad_b)
-                print(f"El camino más corto entre {ciudad_a} y {ciudad_b} por la distancia es: {camino}")
+                print(f"El camino más corto entre {ciudad_a} y {ciudad_b} por la distancia es: {camino} \n")
             
             elif opcion == "3":
                 ciudad_a, ciudad_b = self.solicitar_ciudades()
                 camino = self.grafo.camino_mas_corto_tiempo(ciudad_a, ciudad_b)
-                print(f"El camino más corto entre {ciudad_a} y {ciudad_b} por el tiempo es: {camino}")
+                print(f"El camino más corto entre {ciudad_a} y {ciudad_b} por el tiempo es: {camino} \n")
                 
             elif opcion == "4":
                 break 
