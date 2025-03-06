@@ -11,8 +11,8 @@ class Datos:
     def leer_archivo(self):
         df = pd.read_csv(self.ruta_archivo, sep=";", header=None, names=['A', 'B', 'KM', 'Minutos'])
         df = df[1:].copy() 
-        df["A"] = df["A"].str.strip()
-        df["B"] = df["B"].str.strip()
+        df["A"] = df["A"].str.strip().str.lower().str.title()
+        df["B"] = df["B"].str.strip().str.lower().str.title()
         df["KM"] = pd.to_numeric(df["KM"], errors="coerce")  
         df["Minutos"] = pd.to_numeric(df["Minutos"], errors="coerce")
         df = df.dropna(subset=["KM", "Minutos"])  

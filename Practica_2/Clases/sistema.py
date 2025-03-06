@@ -9,8 +9,8 @@ class Sistema:
         self.lector.cargar_grafo(self.grafo)
     
     def solicitar_ciudades(self):
-        ciudad_a = input("Ingrese la ciudad de origen: ").strip().capitalize()
-        ciudad_b = input("Ingrese la ciudad de destino: ").strip().capitalize()
+        ciudad_a = input("Ingrese la ciudad de origen: ").strip().lower().title()
+        ciudad_b = input("Ingrese la ciudad de destino: ").strip().lower().title()
         return ciudad_a, ciudad_b    
     
     def menu(self):
