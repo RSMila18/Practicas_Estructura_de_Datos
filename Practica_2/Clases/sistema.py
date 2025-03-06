@@ -3,9 +3,10 @@ from Clases.grafo import Grafo
 
 class Sistema:
     
-    lector = Datos("Datos/Datos vias.csv")
-    grafo = Grafo()
-    lector.cargar_grafo(grafo)
+    def __init__(self):
+        self.lector = Datos("Datos/Datos vias.csv")
+        self.grafo = Grafo()
+        self.lector.cargar_grafo(self.grafo)
     
     def solicitar_ciudades(self):
         ciudad_a = input("Ingrese la ciudad de origen: ")
