@@ -7,7 +7,7 @@ class Datos:
         self.ruta_archivo = path(__file__).parent / ruta_archivo
         
     def leer_archivo(self):
-        return pd.read_csv(self.ruta_archivo)
+        return pd.read_csv("Datos vias.csv", delimite = ";")
     
     def cargar_grafo(self, grafo):
         datos = self.leer_archivo()
