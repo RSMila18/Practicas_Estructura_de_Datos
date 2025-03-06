@@ -13,6 +13,6 @@ class Grafo:
     
     def camino_mas_corto_distancia(self, ciudad_a, ciudad_b):
         return nx.dijkstra_path(self.grafo, ciudad_a, ciudad_b, weight='distancia')
-    
+
     def camino_mas_corto_tiempo(self, ciudad_a, ciudad_b):
         return nx.dijkstra_path(self.grafo, ciudad_a, ciudad_b, weight='tiempo')
